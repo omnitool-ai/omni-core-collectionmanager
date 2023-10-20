@@ -1,1 +1,1 @@
-https://github.com/mercenaries-ai/omni-core-collectionmanager.git
+https://github.com/omnitool-ai/omni-core-collectionmanager.git

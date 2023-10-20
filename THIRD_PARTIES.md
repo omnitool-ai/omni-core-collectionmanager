@@ -1,22 +1,22 @@
 ---
 
-# 3rd-Party Software for [https://github.com/mercenaries-ai/omni-core-collectionmanager.git]()
+# 3rd-Party Software for [https://github.com/omnitool-ai/omni-core-collectionmanager.git]()
 
 
 
-The following 3rd-party software packages may be used by or distributed with **https://github.com/mercenaries-ai/omni-core-collectionmanager.git**.  Any information relevant to third-party vendors listed below are collected using common, reasonable means.
+The following 3rd-party software packages may be used by or distributed with **https://github.com/omnitool-ai/omni-core-collectionmanager.git**.  Any information relevant to third-party vendors listed below are collected using common, reasonable means.
 
 
 Date generated | Revision ID
 :------------: | :----------:
-10/20/23 | f2a0fcc2e7d48e581b32980d423dbe7d7deafa47
+10/20/23 | 5d0000ab2d705146989294fdb6c5048e5f7ed8e2
 
 ---
 
 
 ## Declared License
 
-No declared license found for https://github.com/mercenaries-ai/omni-core-collectionmanager.git
+No declared license found for https://github.com/omnitool-ai/omni-core-collectionmanager.git
 
 
 
