@@ -1,0 +1,11 @@
+title: Collection Manager
+version: 0.0.2
+description: Provides the interface for Recipe, Block and Namespace management
+author: Mercenaries.ai team
+origin: https://github.com/mercenaries-ai/omni-core-collectionmanager.git
+client:
+  addToWorkbench: false
+  singleton: true
+  winbox:
+    minwidth: 50%
+    minheight: 80%
