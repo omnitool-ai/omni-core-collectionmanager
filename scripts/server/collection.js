@@ -44,9 +44,10 @@ const script = {
         if(!ctx.app.extensions.has("omni-extension-wa-chat-ui") && item.value?.ui?.chat?.enabled) {
           item.value.ui.chat.enabled = false
         }
-        if(!ctx.app.extensions.has("omni-extension-formio") && item.value?.ui?.formIO?.enabled) {
+        if(!ctx.app.extensions.has("omni-core-formio") && item.value?.ui?.formIO?.enabled) {
           item.value.ui.formIO.enabled = false
         }
+        console.log(item.value.ui)
         return item
       })
       return {
