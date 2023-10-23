@@ -104,7 +104,7 @@ const createGallery = function (itemsPerPage: number, itemApi: string) {
     hover: false,
     favOnly: false,
     async init() {
-      await this.loadMore()
+      await this.fetchItems()
     },
     openChat(item: CollectionItem) {
       if (item.type === 'recipe')
@@ -172,9 +172,6 @@ const createGallery = function (itemsPerPage: number, itemApi: string) {
 
       this.shadow = this.shadow.concat(items);
       this.prepareFromShadow()
-    },
-    async loadMore(replace = false) {
-      await this.fetchItems(replace)
     },
     async fetchItems(replace = false) {
       if (this.viewerMode) {
@@ -433,7 +430,7 @@ document.addEventListener('alpine:init', async () => {
     filterOption: '',
     needRefresh: false,
     async refresh() {
-      await this.loadMore(true)
+      await this.fetchItems(true)
       this.multiSelectedItems=[]
       window.scrollTo({ top: 0, behavior: 'smooth' });
     },
@@ -454,7 +451,7 @@ document.addEventListener('alpine:init', async () => {
     },
     async filteredItems () {
       this.needRefresh = false
-      await this.loadMore(true)
+      await this.fetchItems(true)
       return this.items
     },
   }));
