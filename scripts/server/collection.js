@@ -47,7 +47,6 @@ const script = {
         if(!ctx.app.extensions.has("omni-core-formio") && item.value?.ui?.formIO?.enabled) {
           item.value.ui.formIO.enabled = false
         }
-        console.log(item.value.ui)
         return item
       })
       return {
