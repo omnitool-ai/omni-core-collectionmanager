@@ -37,7 +37,7 @@ const config = {
     }
   },
   test: {
-    include: [path.resolve(__dirname,'../tests/**.test.js')]
+    include: [path.resolve(__dirname,'./tests/**.test.js')]
   }
 }
 
