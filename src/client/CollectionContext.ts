@@ -35,4 +35,20 @@ export class CollectionContext {
   clickToAction(item: CollectionItem): void {
     this.strategy.clickToAction(item, this.sdk);
   }
+
+  openChat(item: CollectionItem) {
+    if (this.strategy.openChat) {
+      this.strategy.openChat(item, this.sdk);
+    } else {
+      console.log('openChat is not implemented for this collection type');
+    }
+  }
+
+  openFormIO(item: CollectionItem) {
+    if (this.strategy.openFormIO) {
+      this.strategy.openFormIO(item, this.sdk);
+    } else {
+      console.log('openFormIO is not implemented for this collection type');
+    }
+  }
 }

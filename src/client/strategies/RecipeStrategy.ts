@@ -16,8 +16,37 @@ export class RecipeStrategy implements CollectionStrategy {
     }
   }
 
-  async clickToAction(item: CollectionItem, sdk: OmniSDKClient):  Promise<void> {
+  async clickToAction(item: CollectionItem, sdk: OmniSDKClient): Promise<void> {
     await sdk.openRecipeInEditor(item.value.id, item.value.version);
+    sdk.close();
+  }
+
+  openChat(item: CollectionItem, sdk: OmniSDKClient): void {
+    sdk.showExtension('omni-extension-wa-chat-ui', {
+      chat: {
+        id: item.value.id,
+        name: item.value.meta.name,
+        description: item.value.meta.description,
+        image: this.getIconPath(item)
+      }
+    });
+    sdk.close();
+  }
+
+  openFormIO(item: CollectionItem, sdk: OmniSDKClient): void {
+    sdk.showExtension('omni-extension-formio', { recipe: { id: item.value.id, version: undefined } }, 'render', {
+      singletonHash: 'formio-' + item.value.id,
+      winbox: {
+        //@ts-ignore
+        title: '▶️' + item.value.meta.name,
+        x: 'center',
+        y: 'center',
+        minheight: 500,
+        minwidth: 600,
+        autosize: true
+      },
+      hideToolbar: true
+    });
     sdk.close();
   }
 }
