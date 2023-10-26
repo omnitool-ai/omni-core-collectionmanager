@@ -36,6 +36,9 @@ const config = {
     alias: {
     }
   },
+  test: {
+    include: [path.resolve(__dirname,'../tests/**.test.js')]
+  }
 }
 
 export default config

@@ -202,21 +202,35 @@ const createGallery = function (itemsPerPage: number, itemApi: string) {
         this.totalPages = (data.items.length === limit) ? this.currentPage + 1 : this.currentPage
       }
     },
+
     selectItem(item: CollectionItem, event?: MouseEvent) {
+      // Exit early if the item has an onclick property
       if (item.onclick) {
         return;
       }
+
+      // Deselect the item if it's already selected
       const idx = this.multiSelectedItems.indexOf(item);
       if (idx > -1) {
         this.multiSelectedItems.splice(idx, 1); // Deselect the item if it's already selected
-      } else {
-        if (event && event.type === 'contextmenu') { // multi select
+        return;
+      } 
+
+      // Handle item selection based on mouse event
+      if (!event) {
+        return;
+      }
+
+      switch (event.type) {
+        case 'contextmenu': // multi select
           this.multiSelectedItems.push(item);
-        } else if (event && event.type === 'click') { // select
+          break;
+        case 'click': // select
           this.multiSelectedItems = [item];
-        }
+          break;
       }
     },
+    
     paginate() {
       return this.items;
     },
