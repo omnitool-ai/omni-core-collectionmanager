@@ -11,5 +11,6 @@ export interface CollectionStrategy {
     clickToAction(item: CollectionItem, sdk: OmniSDKClient): Promise<void>;
     openChat?(item: CollectionItem, sdk: OmniSDKClient): void;
     openFormIO?(item: CollectionItem, sdk: OmniSDKClient): void;
+    update?(item: CollectionItem, sdk: OmniSDKClient): Promise<void>;
 }
   

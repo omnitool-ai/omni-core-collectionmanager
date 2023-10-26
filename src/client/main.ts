@@ -220,10 +220,8 @@ const createGallery = function (itemsPerPage: number, itemApi: string) {
         console.error(e);
       }
     },
-    async update(item: CollectionItem, type: CollectionType) {
-      if (type == 'extension') {
-        sdk.runClientScript('extensions',['update', item.value.id]);
-      }
+    async update(item: CollectionItem) {
+      collectionContext.update(item)
     },
     getIconPath(item: CollectionItem) {
       return collectionContext.getIconPath(item);

@@ -19,4 +19,8 @@ export class ExtensionStrategy implements CollectionStrategy {
       await sdk.runClientScript('extensions', ['add', item.value.url]);
     }
   }
+
+  async update(item: CollectionItem, sdk: OmniSDKClient): Promise<void> {
+    sdk.runClientScript('extensions',['update', item.value.id]);
+  }
 }

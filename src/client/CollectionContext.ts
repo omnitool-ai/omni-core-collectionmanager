@@ -51,4 +51,12 @@ export class CollectionContext {
       console.log('openFormIO is not implemented for this collection type');
     }
   }
+
+  update(item: CollectionItem) {
+    if (this.strategy.update) {
+      this.strategy.update(item, this.sdk);
+    } else {
+      console.log('update is not implemented for this collection type');
+    }
+  }
 }
