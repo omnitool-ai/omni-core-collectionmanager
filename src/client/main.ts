@@ -8,6 +8,8 @@ import tippy from 'tippy.js'
 import 'tippy.js/dist/tippy.css'
 import DOMPurify from 'dompurify'
 import {OmniSDKClient} from 'omni-sdk';
+import { CollectionItem, CollectionType } from './types';
+import { CollectionContext } from './CollectionContext';
 
 const sdk = new OmniSDKClient("omni-core-collectionmanager").init();
 
@@ -16,53 +18,6 @@ declare global {
     Alpine: typeof Alpine
   }
 }
-type CollectionType = 'block' | 'recipe' | 'extension' | 'api';
-
-interface BaseCollectionValue {
-  id: string;
-  name: string;
-  title: string;
-  description: string;
-  category: string;
-  tags: string[];
-  starred: boolean;
-  setData: (type: CollectionType, data: Partial<Recipe & Extension & Block & Api>) => void;
-}
-
-interface Recipe extends BaseCollectionValue {
-  author: string;
-  pictureUrl: string;
-  canDelete: boolean;
-  created: Date | null;
-  updated: Date | null;
-  deleted: boolean;
-  createdDate: string | null;
-  updatedDate: string | null;
-}
-
-interface Extension extends BaseCollectionValue {
-  author: string;
-  installed: boolean;
-  canOpen: boolean;
-  isCore: boolean;
-  isLocal: boolean;
-  url: string;
-}
-
-interface Block extends BaseCollectionValue {
-  // ... (any attributes unique to Block)
-}
-
-interface Api extends BaseCollectionValue {
-  namespace: string;
-  basePath: string;
-  signUpUrl: string;
-  url: string;
-  key: Map<string, string>;
-}
-
-type CollectionValue = Recipe | Extension | Block | Api;
-type CollectionItem = { type: CollectionType; value: CollectionValue; };
 
 // -------------------- Viewer Mode: If q.focusedItem is set, we hide the gallery and show the item full screen -----------------------
 const args = new URLSearchParams(location.search);
@@ -72,6 +27,7 @@ focusedItem = params?.focusedItem;
 let viewerMode = focusedItem ? true : false;
 let type = params?.type;
 let filter = params?.filter;
+const collectionContext = new CollectionContext(type)
 
 const getFavoriteKey = function (type: CollectionType, data: any) {
   let key = 'fav-' + type;
@@ -230,7 +186,7 @@ const createGallery = function (itemsPerPage: number, itemApi: string) {
           break;
       }
     },
-    
+
     paginate() {
       return this.items;
     },
@@ -296,30 +252,7 @@ const createGallery = function (itemsPerPage: number, itemApi: string) {
       }
     },
     getIconPath(item: CollectionItem) {
-      if (item.type === 'recipe') {
-        if (item.value.meta.pictureUrl)
-        {
-          return '/extensions/omni-core-recipes/assets/recipe-cover/'+ item.value.meta.pictureUrl;
-        }
-        else
-        {
-          return '/omni.png';
-        }
-      } else if (item.type === 'extension') {
-        return '/extensions/'+item.value.id+'/logo.png';
-      } else if (item.type === 'block') {
-        const names = item.value?.name?.split('.')
-        if (names && names.length > 1 ) {
-          if (names[0].includes(':')) {
-            return '/extensions/'+ names[0].split(':')[0]+'/logo.png';
-          } else {
-            return '/logos/'+ names[0]+'.png';
-          }
-        }
-        return null;
-      } else if (item.type === 'api') {
-        return '/logos/'+ item.value.namespace + '.png';
-      }
+      return collectionContext.getIconPath(item);
     },
     async toggleFavorite(item: CollectionItem, type: CollectionType) {
       const key = getFavoriteKey(type, item.value)
