@@ -27,7 +27,7 @@ focusedItem = params?.focusedItem;
 let viewerMode = focusedItem ? true : false;
 let type = params?.type;
 let filter = params?.filter;
-const collectionContext = new CollectionContext(type)
+const collectionContext = new CollectionContext(type, sdk)
 
 const getFavoriteKey = function (type: CollectionType, data: any) {
   let key = 'fav-' + type;
@@ -266,43 +266,9 @@ const createGallery = function (itemsPerPage: number, itemApi: string) {
       // Don't remove it without adding the redraw back in.
       this.starred = !this.starred
     },
-    async clickToAction(item: CollectionItem, type: CollectionType) {
-      switch (type) {
-        case 'recipe':
-          // Assuming the error here is known and is because of external typings
-          await sdk.openRecipeInEditor(item.value.id, item.value.version);
-          sdk.close();
-          break;
 
-        case 'block':
-          console.log(await sdk.runClientScript('add', [item.value.name]));
-          break;
-
-        case 'extension':
-          if (item.value.installed) {
-            sdk.signalIntent("show", item.value.id);
-          } else {
-            await sdk.runClientScript('extensions', ['add', item.value.url]);
-          }
-          break;
-
-        case 'api':
-          if (this.hasKey) {
-            this.hasKey = !this.hasKey // Toggle on click
-            const response = await sdk.runClientScript('revokeKey', [this.namespace, this.key.id]);
-            this.hasKey = !response.answer // Set to server value
-          } else {
-            this.hasKey = !this.hasKey // Toggle on click
-            const response = await sdk.runClientScript('setKey', [this.namespace, this.key.id, this.key.secret]);
-            this.hasKey = response.answer // Set to server value
-          }
-          break;
-
-        // Optional: Add a default case if there's a possibility of unknown types.
-        default:
-          console.error(`Unknown type: ${type}`);
-      }
-
+    async clickToAction(item: CollectionItem) {
+      await collectionContext.clickToAction(item);
     }
   };
 };

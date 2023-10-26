@@ -3,9 +3,11 @@
  * All rights reserved.
  */
 
+import { OmniSDKClient } from 'omni-sdk';
 import { CollectionItem } from '../types';
 
 export interface CollectionStrategy {
     getIconPath(item: CollectionItem): string | null;
+    clickToAction(item: CollectionItem, sdk: OmniSDKClient): void;
 }
   

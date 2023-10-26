@@ -13,7 +13,7 @@
     }
   </style>
   
-  <script type="module" crossorigin src="/extensions/omni-core-collectionmanager/assets/main-d30856ea.js"></script>
+  <script type="module" crossorigin src="/extensions/omni-core-collectionmanager/assets/main-e2c8dac9.js"></script>
   <link rel="stylesheet" href="/extensions/omni-core-collectionmanager/assets/index-45c5355f.css">
 </head>
 
@@ -148,7 +148,7 @@
         <td class="px-4 py-2 font-medium text-gray-900"><span x-text="description"> </span></td>
         <td class="px-4 py-2 font-medium text-gray-900">
           <template x-if="item.type === 'block'">
-            <button x-tooltip="Add Block" class="flex cursor-pointer p-2.5 justify-center rounded-md bg-amber-500 hover:drop-shadow-lg" @click="await clickToAction(item, item.type)">
+            <button x-tooltip="Add Block" class="flex cursor-pointer p-2.5 justify-center rounded-md bg-amber-500 hover:drop-shadow-lg" @click="await clickToAction(item)">
               <svg width='18' height='18' viewBox='0 0 18 18' fill='none' xmlns='http://www.w3.org/2000/svg' class="w-4 h-4">
                 <path
                   d='M14.1147 7.55356L14.1148 3.52977C14.1148 2.13263 12.9404 1.00002 11.4918 1.00001L3.62302 1C2.1744 0.999997 1.00006 2.13261 1.00006 3.52975L1 10.9107C0.999996 12.3078 2.17433 13.4405 3.62295 13.4405H8.00214M11.2295 13.4405H14.1148M14.1148 13.4405H17M14.1148 13.4405V10.6577M14.1148 13.4405V16.7291'
@@ -160,7 +160,7 @@
             </button>
           </template>
           <template x-if="item.type === 'recipe'">
-            <button x-tooltip="Edit" class="flex cursor-pointer p-2.5 justify-center rounded-md bg-amber-500 hover:drop-shadow-lg" @click="await clickToAction(item, item.type)">
+            <button x-tooltip="Edit" class="flex cursor-pointer p-2.5 justify-center rounded-md bg-amber-500 hover:drop-shadow-lg" @click="await clickToAction(item)">
               <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="#F5F5F5" stroke-width="1.6" stroke-linecap="round"
                 stroke-linejoin="round">
                 <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
@@ -169,7 +169,7 @@
             </button>
           </template>
           <template x-if="item.type === 'extension' && !installed">
-            <button x-tooltip="Install" class="flex cursor-pointer p-2.5 justify-center rounded-md bg-amber-500 hover:drop-shadow-lg" @click="await clickToAction(item, item.type)">
+            <button x-tooltip="Install" class="flex cursor-pointer p-2.5 justify-center rounded-md bg-amber-500 hover:drop-shadow-lg" @click="await clickToAction(item)">
               <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4">
                   <path d="M8.00156 1.28027V15.3603M1.60156 8.00027H14.4016" stroke="#F5F5F5" stroke-width="1.6"
                     stroke-linecap="round" stroke-linejoin="round" />
@@ -177,7 +177,7 @@
             </button>
           </template>
           <template x-if="item.type === 'extension' && installed && canOpen">
-            <button x-tooltip="Open" class="flex cursor-pointer p-2.5 justify-center rounded-md bg-green-500 hover:drop-shadow-lg" @click="await clickToAction(item, item.type)">
+            <button x-tooltip="Open" class="flex cursor-pointer p-2.5 justify-center rounded-md bg-green-500 hover:drop-shadow-lg" @click="await clickToAction(item)">
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4">
                   <path
                     d="M16.3606 9.91965V14.5196C16.3606 15.5359 15.5369 16.3596 14.5206 16.3596H3.48062C2.46442 16.3596 1.64062 15.5359 1.64062 14.5196V9.91965M12.6806 5.31965L9.00062 1.63965M9.00062 1.63965L5.32062 5.31965M9.00062 1.63965V12.6796"
@@ -291,7 +291,7 @@
             
                   <button
                     class='justify-between items-center self-stretch flex flex-row gap-1.5 bg-amber-500 px-2 py-1.5 rounded-lg cursor-pointer hover:drop-shadow-md'
-                    @click="await clickToAction(item, 'recipe');">
+                    @click="await clickToAction(item);">
                     <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="#F5F5F5" stroke-width="1.6" stroke-linecap="round"
                       stroke-linejoin="round">
                       <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
@@ -416,7 +416,7 @@
                   </button>
                   <button x-show="!installed || canOpen"
                     class='justify-between items-center self-stretch flex flex-row gap-1.5 px-3 py-1.5 rounded-lg'
-                    @click="await clickToAction(item, item.type);" :class="{ 'bg-amber-500 hover:drop-shadow-lg cursor-pointer': !installed, 'bg-green-500 hover:drop-shadow-lg cursor-pointer': installed && canOpen }">
+                    @click="await clickToAction(item);" :class="{ 'bg-amber-500 hover:drop-shadow-lg cursor-pointer': !installed, 'bg-green-500 hover:drop-shadow-lg cursor-pointer': installed && canOpen }">
                     <template x-if="installed && canOpen">
                       <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4">
                         <path
@@ -518,7 +518,7 @@
               <div class='justify-end items-center flex w-full max-w-full flex-row gap-1.5 mt-1.5'>
                 <button
                     class='justify-between items-center self-stretch flex flex-row gap-1.5 bg-amber-500 px-3 py-1.5 rounded-lg cursor-pointer hover:drop-shadow-lg'
-                    @click="await clickToAction(item, item.type);"
+                    @click="await clickToAction(item);"
                   >
                     <svg width='18' height='18' viewBox='0 0 18 18' fill='none' xmlns='http://www.w3.org/2000/svg'>
                       <path
@@ -571,7 +571,7 @@
                   <button x-show="key.type !== 'oauth2' || hasKey"
                     class="justify-between items-center px-3 py-1.5 rounded-lg"
                     :class="{'bg-green-500 hover:drop-shadow-lg cursor-pointer' : !hasKey, 'bg-red-500 hover:drop-shadow-lg cursor-pointer': hasKey}"
-                    @click="await clickToAction(item, 'api');"><span class="text-xs text-white font-semibold" x-text="hasKey ? 'Revoke' : 'Add'"></span></button>
+                    @click="await clickToAction(item);"><span class="text-xs text-white font-semibold" x-text="hasKey ? 'Revoke' : 'Add'"></span></button>
                   <a :href="signUpUrl" target="_blank"><button x-show="signUpUrl !== null"
                       class="justify-between items-center px-3 py-1.5 rounded-lg bg-gray-300 whitespace-nowrap hover:drop-shadow-lg cursor-pointer"><span class="text-xs text-black font-semibold">Sign
                         Up</span></button></a>

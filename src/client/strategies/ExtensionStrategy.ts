@@ -3,11 +3,20 @@
  * All rights reserved.
  */
 
-import { CollectionStrategy } from "./CollectionStrategy";
-import { CollectionItem } from "../types";
+import { CollectionStrategy } from './CollectionStrategy';
+import { CollectionItem } from '../types';
+import { OmniSDKClient } from 'omni-sdk';
 
 export class ExtensionStrategy implements CollectionStrategy {
-    getIconPath(item: CollectionItem): string | null {
-      return '/extensions/' + item.value.id + '/logo.png';
+  getIconPath(item: CollectionItem): string | null {
+    return '/extensions/' + item.value.id + '/logo.png';
+  }
+
+  async clickToAction(item: CollectionItem, sdk: OmniSDKClient):  Promise<void> {
+    if (item.value.installed) {
+      sdk.signalIntent('show', item.value.id);
+    } else {
+      await sdk.runClientScript('extensions', ['add', item.value.url]);
     }
   }
+}
