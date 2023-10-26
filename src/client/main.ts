@@ -59,6 +59,8 @@ const createGallery = function (itemsPerPage: number, itemApi: string) {
     focusedItem: focusedItem || null,
     hover: false,
     favOnly: false,
+    search: filter || '',
+    filterOption: '',
     async init() {
       await this.fetchItems()
     },
@@ -241,7 +243,33 @@ const createGallery = function (itemsPerPage: number, itemApi: string) {
 
     async clickToAction(item: CollectionItem) {
       await collectionContext.clickToAction(item);
-    }
+    }, 
+    needRefresh: false,
+    async refresh() {
+      await this.fetchItems(true)
+      this.multiSelectedItems=[]
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    },
+    async applyFilter() {
+      await this.refresh()
+      if (this.filterOption === 'Favorites') {
+        this.items = this.items.filter((item) => {
+          const key = getFavoriteKey(item.type, item.value)
+          return window.localStorage.getItem(key) ? true : false;
+        });
+      } else if (this.filterOption === 'Template') {
+        this.items = this.items.filter((item) => {
+          return item.value.meta?.template ? true : false;
+        });
+      } else if (this.filterOption === 'All') {
+        // Do nothing
+      }
+    },
+    async filteredItems () {
+      this.needRefresh = false
+      await this.fetchItems(true)
+      return this.items
+    },
   };
 };
 
@@ -311,34 +339,6 @@ document.addEventListener('alpine:init', async () => {
 
   Alpine.data('appState', () => ({
     createGallery,
-    search: filter || '',
-    filterOption: '',
-    needRefresh: false,
-    async refresh() {
-      await this.fetchItems(true)
-      this.multiSelectedItems=[]
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    },
-    async applyFilter() {
-      await this.refresh()
-      if (this.filterOption === 'Favorites') {
-        this.items = this.items.filter((item) => {
-          const key = getFavoriteKey(item.type, item.value)
-          return window.localStorage.getItem(key) ? true : false;
-        });
-      } else if (this.filterOption === 'Template') {
-        this.items = this.items.filter((item) => {
-          return item.value.meta?.template ? true : false;
-        });
-      } else if (this.filterOption === 'All') {
-        // Do nothing
-      }
-    },
-    async filteredItems () {
-      this.needRefresh = false
-      await this.fetchItems(true)
-      return this.items
-    },
   }));
 
   Alpine.magic('tooltip', (el: HTMLElement) => (message) => {
