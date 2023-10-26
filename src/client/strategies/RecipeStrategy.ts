@@ -34,7 +34,7 @@ export class RecipeStrategy implements CollectionStrategy {
   }
 
   openFormIO(item: CollectionItem, sdk: OmniSDKClient): void {
-    sdk.showExtension('omni-extension-formio', { recipe: { id: item.value.id, version: undefined } }, 'render', {
+    sdk.showExtension('omni-core-formio', { recipe: { id: item.value.id, version: undefined } }, 'render', {
       singletonHash: 'formio-' + item.value.id,
       winbox: {
         //@ts-ignore
