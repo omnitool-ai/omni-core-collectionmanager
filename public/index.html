@@ -13,8 +13,8 @@
     }
   </style>
   
-  <script type="module" crossorigin src="/extensions/omni-core-collectionmanager/assets/main-1a3266d2.js"></script>
-  <link rel="stylesheet" href="/extensions/omni-core-collectionmanager/assets/index-45c5355f.css">
+  <script type="module" crossorigin src="/extensions/omni-core-collectionmanager/assets/main-73683f98.js"></script>
+  <link rel="stylesheet" href="/extensions/omni-core-collectionmanager/assets/index-8e92a37a.css">
 </head>
 
 <body class="p-6 overflow-hidden bg-white">
@@ -110,7 +110,29 @@
           </div>
           <!-- Gallery -->
           <div class="relative custom-scroll w-full h-full mt-14">
-            <template x-if="viewType ==='list'"> <table class="w-full border-collapse divide-y-2 divide-gray-200 bg-white text-sm table-auto">
+            <div x-show="isLoading" class="flex w-full h-full justify-center items-center space-x-2">
+              <div aria-label="Loading..." role="status">
+                <svg class="animate-spin w-5 h-5 stroke-gray-500" viewBox="0 0 256 256">
+                  <line x1="128" y1="32" x2="128" y2="64" stroke-linecap="round" stroke-linejoin="round" stroke-width="24">
+                  </line>
+                  <line x1="195.9" y1="60.1" x2="173.3" y2="82.7" stroke-linecap="round" stroke-linejoin="round" stroke-width="24">
+                  </line>
+                  <line x1="224" y1="128" x2="192" y2="128" stroke-linecap="round" stroke-linejoin="round" stroke-width="24">
+                  </line>
+                  <line x1="195.9" y1="195.9" x2="173.3" y2="173.3" stroke-linecap="round" stroke-linejoin="round" stroke-width="24">
+                  </line>
+                  <line x1="128" y1="224" x2="128" y2="192" stroke-linecap="round" stroke-linejoin="round" stroke-width="24">
+                  </line>
+                  <line x1="60.1" y1="195.9" x2="82.7" y2="173.3" stroke-linecap="round" stroke-linejoin="round" stroke-width="24">
+                  </line>
+                  <line x1="32" y1="128" x2="64" y2="128" stroke-linecap="round" stroke-linejoin="round" stroke-width="24">
+                  </line>
+                  <line x1="60.1" y1="60.1" x2="82.7" y2="82.7" stroke-linecap="round" stroke-linejoin="round" stroke-width="24">
+                  </line>
+                </svg>
+              </div>
+              <span class="text-sm font-medium text-gray-500">Loading...</span>
+            </div>            <template x-if="viewType ==='list'"> <table class="w-full border-collapse divide-y-2 divide-gray-200 bg-white text-sm table-auto">
    <thead>
       <tr>
          <th class="px-4 py-2">
@@ -583,7 +605,7 @@
    </template>
 </div>
  </template>
-            <div class="flex justify-center p-4 cursor-pointer" x-show="totalPages !== currentPage">
+            <div x-show="!isLoading" class="flex justify-center p-4 cursor-pointer" x-show="totalPages !== currentPage">
                 <button class="loadmore" @click="fetchItems()">Load More</button>
             </div>          </div>
           <div

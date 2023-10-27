@@ -61,6 +61,7 @@ const createGallery = function (itemsPerPage: number, itemApi: string) {
     favOnly: false,
     search: filter || '',
     filterOption: '',
+    isLoading: false,
     async init() {
       await this.fetchItems()
     },
@@ -106,7 +107,9 @@ const createGallery = function (itemsPerPage: number, itemApi: string) {
       this.prepareFromShadow()
     },
     async fetchItems(replace = false) {
+      this.isLoading = true
       if (this.viewerMode) {
+        this.isLoading = false
         return Promise.resolve();
       }
 
@@ -120,18 +123,25 @@ const createGallery = function (itemsPerPage: number, itemApi: string) {
         cursor: replace ? 0 : this.cursor,
         filter: this.search,
       };
-      const data = await sdk.runExtensionScript('collection', body);
-      this.addItems(data.items.slice(0, this.itemsPerPage), replace);
 
-      if (data.hasOwnProperty('currentPage')) {
-        this.currentPage = data.currentPage
-      } else {
-        this.currentPage += 1
-      }
-      if (data.hasOwnProperty('totalPages')) {
-        this.totalPages = data.totalPages
-      } else {
-        this.totalPages = (data.items.length === limit) ? this.currentPage + 1 : this.currentPage
+      try {
+        const data = await sdk.runExtensionScript('collection', body);
+        this.addItems(data.items.slice(0, this.itemsPerPage), replace);
+
+        if (data.hasOwnProperty('currentPage')) {
+          this.currentPage = data.currentPage
+        } else {
+          this.currentPage += 1
+        }
+        if (data.hasOwnProperty('totalPages')) {
+          this.totalPages = data.totalPages
+        } else {
+          this.totalPages = (data.items.length === limit) ? this.currentPage + 1 : this.currentPage
+        }
+      } catch (error) {
+        console.error("Error fetching items:", error);
+      } finally {
+        this.isLoading = false
       }
     },
 

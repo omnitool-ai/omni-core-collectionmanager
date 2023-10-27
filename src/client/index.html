@@ -108,6 +108,7 @@
           </div>
           <!-- Gallery -->
           <div class="relative custom-scroll w-full h-full mt-14">
+            {{>loading}}
             <template x-if="viewType ==='list'"> {{>main_list}} </template>
             <template x-if="viewType ==='grid'"> {{>main_grid}} </template>
             {{>load_more}}
