@@ -13,7 +13,7 @@
     }
   </style>
   
-  <script type="module" crossorigin src="/extensions/omni-core-collectionmanager/assets/main-73683f98.js"></script>
+  <script type="module" crossorigin src="/extensions/omni-core-collectionmanager/assets/main-86e8034a.js"></script>
   <link rel="stylesheet" href="/extensions/omni-core-collectionmanager/assets/index-8e92a37a.css">
 </head>
 
@@ -605,7 +605,7 @@
    </template>
 </div>
  </template>
-            <div x-show="!isLoading" class="flex justify-center p-4 cursor-pointer" x-show="totalPages !== currentPage">
+            <div class="flex justify-center p-4 cursor-pointer" x-show="!isLoading && totalPages !== currentPage">
                 <button class="loadmore" @click="fetchItems()">Load More</button>
             </div>          </div>
           <div
