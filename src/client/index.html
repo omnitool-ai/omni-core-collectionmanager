@@ -79,7 +79,7 @@
             <div class="my-2 flex flex-row">
               <div class="flex flex-row mb-1">
                 <div class="relative" >
-                  <select x-model="filterOption" x-effect="$watch('filterOption', value => applyFilter())"
+                  <select x-model="filterOption" @change="applyFilter()"
                     class="h-full rounded-l border sm:rounded-r-none sm:border-r-0 block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white">
                     <option>All</option>
                     <option>Favorites</option>
@@ -101,7 +101,7 @@
                   </svg>
                 </span>
                 <input placeholder="Search" x-ref="search" autofocus type="search" x-model.debounce.500ms="search"
-                  id="search" autocomplete="off" x-init="$refs.search.focus()"
+                  id="search" autocomplete="off" x-init="$refs.search.focus()" 
                   class="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none" />
               </div>
             </div>
