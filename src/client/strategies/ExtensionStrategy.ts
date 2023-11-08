@@ -14,7 +14,7 @@ export class ExtensionStrategy implements CollectionStrategy {
 
   async clickToAction(item: CollectionItem, sdk: OmniSDKClient):  Promise<void> {
     if (item.value.installed) {
-      sdk.signalIntent('show', item.value.id);
+      sdk.showExtension(item.value.id, {}, undefined,{}, 'open')
     } else {
       await sdk.runClientScript('extensions', ['add', item.value.url]);
     }
