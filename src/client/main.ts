@@ -123,7 +123,6 @@ const createGallery = function (itemsPerPage: number, itemApi: string) {
         cursor: replace ? 0 : this.cursor,
         filter: this.search,
       };
-
       try {
         const data = await sdk.runExtensionScript('collection', body);
         this.addItems(data.items.slice(0, this.itemsPerPage), replace);
