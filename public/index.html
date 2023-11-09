@@ -13,13 +13,13 @@
     }
   </style>
   
-  <script type="module" crossorigin src="/extensions/omni-core-collectionmanager/assets/main-18e82322.js"></script>
+  <script type="module" crossorigin src="/extensions/omni-core-collectionmanager/assets/main-25a2b995.js"></script>
   <link rel="stylesheet" href="/extensions/omni-core-collectionmanager/assets/index-93a6c732.css">
 </head>
 
 <body class="p-6 overflow-hidden bg-white">
-  <div class="m-h-screen bg-white" x-data="appState">
-    <div id="container" class="bg-white" x-data="createGallery(60, '')"
+  <div class="m-h-screen bg-white" x-data="collectionManager">
+    <div id="container" class="bg-white" x-data="createGallery()"
       @keydown.escape.window="multiSelectedItems.length>0 ? multiSelectedItems = [] :  focusedItem ? focusedItem = null :  close()">
       <!-- Gallery Nav  -->
       <div x-show="!viewerMode && !focusedItem"

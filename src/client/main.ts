@@ -29,26 +29,18 @@ let type = params?.type;
 let filter = params?.filter;
 const collectionContext = new CollectionContext(type, sdk)
 
-const createGallery = function (itemsPerPage: number, itemApi: string) {
+const createGallery = function () {
   return {
     type: type,
     viewerMode: viewerMode,
     currentPage: 0,
-    itemsPerPage: itemsPerPage,
-    itemApi: itemApi,
+    itemsPerPage: 60,
     items: new Array<CollectionItem>(),
     shadow: new Array<CollectionItem>(),
     totalPages: 1,
     multiSelectedItems: [],
     cursor: 0,
-    showInfo: false,
-    loading: false, // for anims
-    scale: 1, // zoom
-    x: 0, //pan
-    y: 0,
     focusedItem: focusedItem || null,
-    hover: false,
-    favOnly: false,
     search: filter || '',
     filterOption: '',
     isLoading: false,
@@ -68,12 +60,6 @@ const createGallery = function (itemsPerPage: number, itemApi: string) {
 
     prepareFromShadow() {
       this.items = [...this.shadow]
-      if(this.favOnly) {
-        this.items = this.items.filter((item) => {
-          const key = collectionContext.getFavoriteKey(item)
-          return window.localStorage.getItem(key) ? true : false;
-        });
-      }
     },
     async addAsBlock(id: string) {
       return await sdk.runClientScript('add', ["omnitool.loop_recipe", {recipe_id: id}]);
@@ -162,17 +148,6 @@ const createGallery = function (itemsPerPage: number, itemApi: string) {
       }
     },
 
-    paginate() {
-      return this.items;
-    },
-
-    mouseEnter() {
-      this.hover = true;
-    },
-    mouseLeave() {
-      this.hover = false;
-    },
-
     async deleteItemList(itemList: Array<CollectionItem>) {
       if(!itemList || itemList.length === 0) return;
       let deletedItemList = [];
@@ -231,9 +206,6 @@ const createGallery = function (itemsPerPage: number, itemApi: string) {
       const key = collectionContext.getFavoriteKey(item)
       sdk.runClientScript('toggleFavorite', [key])
       item.value.starred = window.localStorage.getItem(key) !== null // Toggle.
-      if (this.favOnly) {
-        this.prepareFromShadow() // `item` is no longer visible!
-      }
 
       // TODO: The next line isn't part of the toggle logic, but appears to trigger the redraw as a side-effect.
       // Don't remove it without adding the redraw back in.
@@ -338,10 +310,9 @@ document.addEventListener('alpine:init', async () => {
 
   }));
 
-  Alpine.data('appState', () => ({
+  Alpine.data('collectionManager', () => ({
     createGallery,
   }));
-
   Alpine.magic('tooltip', (el: HTMLElement) => (message) => {
     const instance = tippy(el, { content: message, trigger: 'manual' })
 
