@@ -25,6 +25,8 @@ export class CollectionContext {
       this.strategy = new ApiStrategy();
     } else if (type === 'block') {
       this.strategy = new BlockStrategy();
+    } else {
+      console.log('Collection type not supported');
     }
   }
 

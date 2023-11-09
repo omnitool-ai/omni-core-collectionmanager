@@ -13,16 +13,16 @@
     }
   </style>
   
-  <script type="module" crossorigin src="/extensions/omni-core-collectionmanager/assets/main-25a2b995.js"></script>
-  <link rel="stylesheet" href="/extensions/omni-core-collectionmanager/assets/index-93a6c732.css">
+  <script type="module" crossorigin src="/extensions/omni-core-collectionmanager/assets/main-5bfe144b.js"></script>
+  <link rel="stylesheet" href="/extensions/omni-core-collectionmanager/assets/index-dbb210f3.css">
 </head>
 
 <body class="p-6 overflow-hidden bg-white">
   <div class="m-h-screen bg-white" x-data="collectionManager">
     <div id="container" class="bg-white" x-data="createGallery()"
-      @keydown.escape.window="multiSelectedItems.length>0 ? multiSelectedItems = [] :  focusedItem ? focusedItem = null :  close()">
+      @keydown.escape.window="multiSelectedItems.length>0 ? multiSelectedItems = [] : close()">
       <!-- Gallery Nav  -->
-      <div x-show="!viewerMode && !focusedItem"
+      <div
         class="fixed top-0 left-0 w-full h-full flex flex-col items-center justify-center">
         <div x-data="{hoverItem: null, viewType: 'grid'}"
           class="relative p-2 flex flex-row items-top justify-center overflow-hidden"
@@ -219,7 +219,7 @@
             <!-- For multiselect-->
             <div @mouseenter='hoverItem = item.value' @mouseleave='hoverItem = null' @contextmenu.prevent='selectItem(item, $event)'
               class="border-2 rounded-lg border-transparent"
-              :class="{ 'border-yellow-300': multiSelectedItems.includes(item), ' border-white': focusedItem === item.value.value }"
+              :class="{ 'border-yellow-300': multiSelectedItems.includes(item) }"
               alt='item.value.meta.fileName'>
               <!-- Collection -->
               <div x-data='collection' x-effect='setData(item)'
@@ -357,7 +357,7 @@
             <!-- For multiselect-->
             <div @mouseenter='hoverItem = item.value' @mouseleave='hoverItem = null' @contextmenu.prevent='selectItem(item, $event)'
               class="border-2 rounded-lg border-transparent"
-              :class="{ ' border-yellow-300': multiSelectedItems.includes(item), ' border-white': focusedItem === item.value }"
+              :class="{ ' border-yellow-300': multiSelectedItems.includes(item) }"
               alt="item.value.meta.fileName">
               <!-- Collection -->
               <div x-data='collection' x-effect='setData(item)'
@@ -467,7 +467,7 @@
               @mouseleave='hoverItem = null' 
               @contextmenu.prevent='selectItem(item, $event)'
               class="border-2 rounded-lg border-transparent"
-              :class="{ 'border-yellow-300': multiSelectedItems.includes(item), ' border-white': focusedItem === item.value.value }"
+              :class="{ 'border-yellow-300': multiSelectedItems.includes(item) }"
               alt='item.value.meta.fileName'>
             <!-- Collection -->
               <div
@@ -560,7 +560,7 @@
          <template x-if="item.type === 'api' && item.value">
             <div @mouseenter='hoverItem = item.value' @mouseleave='hoverItem = null' @contextmenu.prevent="selectItem(item)"
               class="border-2 rounded-lg border-transparent"
-              :class="{ ' border-yellow-300': multiSelectedItems.includes(item), ' border-white': focusedItem === item.value.value }"
+              :class="{ ' border-yellow-300': multiSelectedItems.includes(item) }"
               alt="item.value.meta.fileName">
               <div class="items-center flex w-[500px] flex-col bg-neutral-200 px-1.5 py-2 rounded-lg"
                 x-data="collection" x-effect="setData(item)">
