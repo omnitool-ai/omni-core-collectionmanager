@@ -605,7 +605,7 @@
    </template>
 </div>
  </template>
-            <div class="flex justify-center p-4 cursor-pointer" x-show="!isLoading && totalPages !== currentPage">
+            <div class="flex justify-center p-4 cursor-pointer" x-show="!isLoading && totalPages !== currentPage && items.length >= itemsPerPage">
                 <button class="loadmore" @click="fetchItems()">Load More</button>
             </div>          </div>
           <div
