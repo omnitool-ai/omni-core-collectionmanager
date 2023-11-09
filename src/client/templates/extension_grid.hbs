@@ -9,7 +9,7 @@
     <!-- Collection Inner Wrapper -->
     {{>common_grid}}
     <!-- Collection Actions -->
-    <div class='justify-end items-center flex w-full max-w-full flex-row gap-1.5 mt-1.5'>
+    <div class='justify-end items-center flex w-full max-w-full flex-row gap-1.5 mt-1.5' x-data='buttonActions()'>
       <button x-show="installed" @click="await update(item)"
         class='justify-between items-center self-stretch flex flex-row gap-1.5 bg-zinc-500 px-3 py-1.5 rounded-lg cursor-pointer hover:drop-shadow-lg'>
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">

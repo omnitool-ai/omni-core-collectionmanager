@@ -9,7 +9,7 @@
     <!-- Collection Inner Wrapper -->
     {{>common_grid}}
     <!-- Collection Actions -->
-    <div class='justify-end items-center flex w-full max-w-full flex-row gap-1.5 mt-1.5'>
+    <div class='justify-end items-center flex w-full max-w-full flex-row gap-1.5 mt-1.5' x-data='buttonActions()'>
       <button x-show='canDelete && hoverItem === item.value'
         class='group justify-between items-start self-stretch flex flex-row gap-1.5 px-2 py-1.5 rounded-lg cursor-pointer bg-red-500 hover:drop-shadow-lg'
         @click='await deleteItem(item)'>

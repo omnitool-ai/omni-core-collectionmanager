@@ -16,7 +16,7 @@
   <td class="px-4 py-2 font-medium text-gray-900"><span x-text="category"> </span></td>  
   </template>
   <td class="px-4 py-2 font-medium text-gray-900"><span x-text="description"> </span></td>
-  <td class="px-4 py-2 font-medium text-gray-900">
+  <td class="px-4 py-2 font-medium text-gray-900" x-data='buttonActions()'>
     <template x-if="item.type === 'block'">
       <button x-tooltip="Add Block" class="flex cursor-pointer p-2.5 justify-center rounded-md bg-amber-500 hover:drop-shadow-lg" @click="await clickToAction(item)">
         <svg width='18' height='18' viewBox='0 0 18 18' fill='none' xmlns='http://www.w3.org/2000/svg' class="w-4 h-4">

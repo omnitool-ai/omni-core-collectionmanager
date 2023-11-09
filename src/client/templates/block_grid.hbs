@@ -15,7 +15,7 @@
     <!-- Collection Inner Wrapper -->
   {{>common_grid}}
   <!-- Collection Actions -->
-  <div class='justify-end items-center flex w-full max-w-full flex-row gap-1.5 mt-1.5'>
+  <div class='justify-end items-center flex w-full max-w-full flex-row gap-1.5 mt-1.5' x-data='buttonActions()'>
     <button
         class='justify-between items-center self-stretch flex flex-row gap-1.5 bg-amber-500 px-3 py-1.5 rounded-lg cursor-pointer hover:drop-shadow-lg'
         @click="await clickToAction(item);"

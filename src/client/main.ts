@@ -47,9 +47,7 @@ const createGallery = function () {
     prepareFromShadow() {
       this.items = [...this.shadow];
     },
-    async addAsBlock(id: string) {
-      return await sdk.runClientScript('add', ['omnitool.loop_recipe', { recipe_id: id }]);
-    },
+    
 
     async addItems(items: Array<CollectionItem>, replace = false) {
       if (replace) {
@@ -176,21 +174,11 @@ const createGallery = function () {
       // Don't remove it without adding the redraw back in.
       this.starred = !this.starred;
     },
-    openChat(item: CollectionItem) {
-      collectionContext.openChat(item);
-    },
-    openFormIO(item: CollectionItem) {
-      collectionContext.openFormIO(item);
-    },
-    async update(item: CollectionItem) {
-      collectionContext.update(item);
-    },
+    
     getIconPath(item: CollectionItem) {
       return collectionContext.getIconPath(item);
     },
-    async clickToAction(item: CollectionItem) {
-      await collectionContext.clickToAction(item);
-    },
+    
     needRefresh: false,
     async refresh() {
       await this.fetchItems(true);
@@ -219,6 +207,26 @@ const createGallery = function () {
     }
   };
 };
+
+const buttonActions = function() {
+  return {
+    async addAsBlock(id: string) {
+      return await sdk.runClientScript('add', ['omnitool.loop_recipe', { recipe_id: id }]);
+    },
+    async clickToAction(item: CollectionItem) {
+      collectionContext.clickToAction(item);
+    },
+    openChat(item: CollectionItem) {
+      collectionContext.openChat(item);
+    },
+    openFormIO(item: CollectionItem) {
+      collectionContext.openFormIO(item);
+    },
+    async update(item: CollectionItem) {
+      collectionContext.update(item);
+    },
+  }
+}
 
 window.Alpine = Alpine;
 document.addEventListener('alpine:init', async () => {
@@ -286,8 +294,10 @@ document.addEventListener('alpine:init', async () => {
   }));
 
   Alpine.data('collectionManager', () => ({
-    createGallery
+    createGallery,
+    buttonActions,
   }));
+
   Alpine.magic('tooltip', (el: HTMLElement) => (message) => {
     const instance = tippy(el, { content: message, trigger: 'manual' });
 
