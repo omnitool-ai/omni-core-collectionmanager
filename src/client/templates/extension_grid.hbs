@@ -4,7 +4,7 @@
   :class="{ ' border-yellow-300': multiSelectedItems.includes(item), ' border-white': focusedItem === item.value }"
   alt="item.value.meta.fileName">
   <!-- Collection -->
-  <div x-data='collection' x-effect='setData(item.type, item.value)'
+  <div x-data='collection' x-effect='setData(item)'
     class='items-center flex w-[416px] flex-[1_0_auto] flex-col bg-neutral-200 px-1.5 py-2 rounded-lg'>
     <!-- Collection Inner Wrapper -->
     {{>common_grid}}

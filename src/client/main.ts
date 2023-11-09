@@ -29,16 +29,6 @@ let type = params?.type;
 let filter = params?.filter;
 const collectionContext = new CollectionContext(type, sdk)
 
-const getFavoriteKey = function (type: CollectionType, data: any) {
-  let key = 'fav-' + type;
-  if (type === 'block') {
-    key += data.name;
-  } else {
-    key += data.id;
-  }
-  return key;
-}
-
 const createGallery = function (itemsPerPage: number, itemApi: string) {
   return {
     type: type,
@@ -80,7 +70,7 @@ const createGallery = function (itemsPerPage: number, itemApi: string) {
       this.items = [...this.shadow]
       if(this.favOnly) {
         this.items = this.items.filter((item) => {
-          const key = getFavoriteKey(item.type, item.value)
+          const key = collectionContext.getFavoriteKey(item)
           return window.localStorage.getItem(key) ? true : false;
         });
       }
@@ -210,7 +200,7 @@ const createGallery = function (itemsPerPage: number, itemApi: string) {
         }
       }
     },
-    async deleteItem(item) {
+    async deleteItem(item: CollectionItem) {
       const type = item.type;
       const payload = Alpine.raw(item.value);
       try {
@@ -237,8 +227,8 @@ const createGallery = function (itemsPerPage: number, itemApi: string) {
     getIconPath(item: CollectionItem) {
       return collectionContext.getIconPath(item);
     },
-    async toggleFavorite(item: CollectionItem, type: CollectionType) {
-      const key = getFavoriteKey(type, item.value)
+    async toggleFavorite(item: CollectionItem) {
+      const key = collectionContext.getFavoriteKey(item)
       sdk.runClientScript('toggleFavorite', [key])
       item.value.starred = window.localStorage.getItem(key) !== null // Toggle.
       if (this.favOnly) {
@@ -263,7 +253,7 @@ const createGallery = function (itemsPerPage: number, itemApi: string) {
       await this.refresh()
       if (this.filterOption === 'Favorites') {
         this.items = this.items.filter((item) => {
-          const key = getFavoriteKey(item.type, item.value)
+          const key = collectionContext.getFavoriteKey(item)
           return window.localStorage.getItem(key) ? true : false;
         });
       } else if (this.filterOption === 'Template') {
@@ -307,7 +297,9 @@ document.addEventListener('alpine:init', async () => {
     url: '',
     key: null,
     hasKey: false,
-    setData(type, data) {
+    setData(item: CollectionItem) {
+      const type = item.type;
+      const data = item.value;
       this.id = data.id;
       this.name = data.meta?.name ?? data.name;
       this.title = data.meta?.title ?? data.title;
@@ -322,7 +314,7 @@ document.addEventListener('alpine:init', async () => {
         this.tags = data.meta?.tags ?? data.tags;
       }
 
-      const key = getFavoriteKey(type, data)
+      const key = collectionContext.getFavoriteKey(item)
       this.starred = window.localStorage.getItem(key) ? true : false;
       this.canDelete = data.canDelete;
       this.created = data.meta?.created;

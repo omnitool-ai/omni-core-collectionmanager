@@ -8,6 +8,10 @@ import { CollectionItem } from '../types';
 import { CollectionStrategy } from './CollectionStrategy';
 
 export class BlockStrategy implements CollectionStrategy {
+  getFavoriteKey(item: CollectionItem): string {
+    return 'fav-' + item.type + item.value.name;
+  }
+
   getIconPath(item: CollectionItem): string | null {
     const names = item.value?.name?.split('.');
     if (names && names.length > 1) {

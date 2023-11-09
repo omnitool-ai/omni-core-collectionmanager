@@ -8,6 +8,10 @@ import { CollectionItem } from '../types';
 import { CollectionStrategy } from './CollectionStrategy';
 
 export class ApiStrategy implements CollectionStrategy {
+  getFavoriteKey(item: CollectionItem): string {
+    return 'fav-' + item.type + item.value.id;
+  }
+  
   getIconPath(item: CollectionItem): string | null {
     return '/logos/' + item.value.namespace + '.png';
   }

@@ -8,6 +8,10 @@ import { CollectionItem } from '../types';
 import { OmniSDKClient } from 'omni-sdk';
 
 export class ExtensionStrategy implements CollectionStrategy {
+  getFavoriteKey(item: CollectionItem): string {
+    return 'fav-' + item.type + item.value.id;
+  }  
+
   getIconPath(item: CollectionItem): string | null {
     return '/extensions/' + item.value.id + '/logo.png';
   }

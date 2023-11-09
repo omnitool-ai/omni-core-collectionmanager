@@ -59,4 +59,13 @@ export class CollectionContext {
       console.log('update is not implemented for this collection type');
     }
   }
+
+  getFavoriteKey(item: CollectionItem) {
+    if (this.strategy.getFavoriteKey) {
+      return this.strategy.getFavoriteKey(item);
+    } else {
+      console.log('getFavoriteKey is not implemented for this collection type');
+      return '';
+    }
+  }
 }

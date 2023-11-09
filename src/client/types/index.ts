@@ -13,7 +13,7 @@ interface BaseCollectionValue {
   category: string;
   tags: string[];
   starred: boolean;
-  setData: (type: CollectionType, data: Partial<Recipe & Extension & Block & Api>) => void;
+  setData: (item: CollectionItem) => void;
 }
 
 interface Recipe extends BaseCollectionValue {

@@ -1,6 +1,6 @@
-<tr x-data="collection" x-effect="setData(item.type, item.value)">
+<tr x-data="collection" x-effect="setData(item)">
   <td class="px-4 py-2"><label class="sr-only" for="id"></label>
-    <div class="favorite" @click="toggleFavorite(item, item.type)">
+    <div class="favorite" @click="toggleFavorite(item)">
       <svg xmlns="http://www.w3.org/2000/svg" width="17" height="15" viewBox="0 0 17 15" fill="none">
         <path :class="{
                   'fill-red-600 stroke-white': starred,

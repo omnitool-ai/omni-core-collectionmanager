@@ -13,7 +13,7 @@
     }
   </style>
   
-  <script type="module" crossorigin src="/extensions/omni-core-collectionmanager/assets/main-55206ef7.js"></script>
+  <script type="module" crossorigin src="/extensions/omni-core-collectionmanager/assets/main-18e82322.js"></script>
   <link rel="stylesheet" href="/extensions/omni-core-collectionmanager/assets/index-93a6c732.css">
 </head>
 
@@ -150,9 +150,9 @@
    </thead>
    <tbody class="divide-y divide-gray-200" x-effect="$watch('search', value => applyFilter())">
    <template x-for="(item, idx) in items" :key="idx">
-      <tr x-data="collection" x-effect="setData(item.type, item.value)">
+      <tr x-data="collection" x-effect="setData(item)">
         <td class="px-4 py-2"><label class="sr-only" for="id"></label>
-          <div class="favorite" @click="toggleFavorite(item, item.type)">
+          <div class="favorite" @click="toggleFavorite(item)">
             <svg xmlns="http://www.w3.org/2000/svg" width="17" height="15" viewBox="0 0 17 15" fill="none">
               <path :class="{
                         'fill-red-600 stroke-white': starred,
@@ -222,7 +222,7 @@
               :class="{ 'border-yellow-300': multiSelectedItems.includes(item), ' border-white': focusedItem === item.value.value }"
               alt='item.value.meta.fileName'>
               <!-- Collection -->
-              <div x-data='collection' x-effect='setData(item.type, item.value)'
+              <div x-data='collection' x-effect='setData(item)'
                 class='items-center flex flex-[1_0_auto] w-[416px] flex-col bg-neutral-200 px-1.5 py-2 rounded-lg'>
                 <!-- Collection Inner Wrapper -->
                 <div class='items-center flex w-full flex-col bg-neutral-50 -mt-0.5 p-1.5 rounded-md'>
@@ -246,7 +246,7 @@
                     </div>
                     <svg xmlns='http://www.w3.org/2000/svg' width='17' height='15' viewBox='0 0 17 15'
                       class='aspect-[1.15] object-cover object-center w-[15px] shrink-0 cursor-pointer' fill='none'
-                      @click='toggleFavorite(item, item.type)'>
+                      @click='toggleFavorite(item)'>
                       <path :class="{
                                   'fill-red-600 stroke-white': starred,
                                   'fill-white stroke-black': !starred
@@ -360,7 +360,7 @@
               :class="{ ' border-yellow-300': multiSelectedItems.includes(item), ' border-white': focusedItem === item.value }"
               alt="item.value.meta.fileName">
               <!-- Collection -->
-              <div x-data='collection' x-effect='setData(item.type, item.value)'
+              <div x-data='collection' x-effect='setData(item)'
                 class='items-center flex w-[416px] flex-[1_0_auto] flex-col bg-neutral-200 px-1.5 py-2 rounded-lg'>
                 <!-- Collection Inner Wrapper -->
                 <div class='items-center flex w-full flex-col bg-neutral-50 -mt-0.5 p-1.5 rounded-md'>
@@ -384,7 +384,7 @@
                     </div>
                     <svg xmlns='http://www.w3.org/2000/svg' width='17' height='15' viewBox='0 0 17 15'
                       class='aspect-[1.15] object-cover object-center w-[15px] shrink-0 cursor-pointer' fill='none'
-                      @click='toggleFavorite(item, item.type)'>
+                      @click='toggleFavorite(item)'>
                       <path :class="{
                                   'fill-red-600 stroke-white': starred,
                                   'fill-white stroke-black': !starred
@@ -472,7 +472,7 @@
             <!-- Collection -->
               <div
                 x-data='collection'
-                x-effect='setData(item.type, item.value)'
+                x-effect='setData(item)'
                 class='items-center flex w-[416px] flex-[1_0_auto] flex-col bg-neutral-200 px-1.5 py-2 rounded-lg'
               >
                 <!-- Collection Inner Wrapper -->
@@ -497,7 +497,7 @@
                   </div>
                   <svg xmlns='http://www.w3.org/2000/svg' width='17' height='15' viewBox='0 0 17 15'
                     class='aspect-[1.15] object-cover object-center w-[15px] shrink-0 cursor-pointer' fill='none'
-                    @click='toggleFavorite(item, item.type)'>
+                    @click='toggleFavorite(item)'>
                     <path :class="{
                                 'fill-red-600 stroke-white': starred,
                                 'fill-white stroke-black': !starred
@@ -563,7 +563,7 @@
               :class="{ ' border-yellow-300': multiSelectedItems.includes(item), ' border-white': focusedItem === item.value.value }"
               alt="item.value.meta.fileName">
               <div class="items-center flex w-[500px] flex-col bg-neutral-200 px-1.5 py-2 rounded-lg"
-                x-data="collection" x-effect="setData(item.type, item.value)">
+                x-data="collection" x-effect="setData(item)">
                 <!-- Collection Actions -->
                 <div x-text="title[0].toUpperCase()+title.slice(1)"
                   class="flex w-full flex-col p-1.5 rounded-md bg-gray-500 text-white font-semibold">

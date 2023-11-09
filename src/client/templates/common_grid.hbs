@@ -19,7 +19,7 @@
     </div>
     <svg xmlns='http://www.w3.org/2000/svg' width='17' height='15' viewBox='0 0 17 15'
       class='aspect-[1.15] object-cover object-center w-[15px] shrink-0 cursor-pointer' fill='none'
-      @click='toggleFavorite(item, item.type)'>
+      @click='toggleFavorite(item)'>
       <path :class="{
                   'fill-red-600 stroke-white': starred,
                   'fill-white stroke-black': !starred
