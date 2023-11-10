@@ -225,6 +225,16 @@ const buttonActions = function() {
     async update(item: CollectionItem) {
       collectionContext.update(item);
     },
+    copyID(id: string) {
+      navigator.clipboard.writeText(id).then(
+        function () {
+          sdk.showToast('Copied ID!',{type: "success", description: id});
+        },
+        function (err) {
+          console.error('Could not copy ID: ', err);
+        }
+      );
+    }
   }
 }
 

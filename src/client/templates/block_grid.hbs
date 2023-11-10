@@ -5,7 +5,7 @@
   @contextmenu.prevent='selectItem(item, $event)'
   class="border-2 rounded-lg border-transparent"
   :class="{ 'border-yellow-300': multiSelectedItems.includes(item) }"
-  alt='item.value.meta.fileName'>
+  alt='item.value.meta.fileName'  x-data='buttonActions()'>
 <!-- Collection -->
   <div
     x-data='collection'
@@ -15,7 +15,7 @@
     <!-- Collection Inner Wrapper -->
   {{>common_grid}}
   <!-- Collection Actions -->
-  <div class='justify-end items-center flex w-full max-w-full flex-row gap-1.5 mt-1.5' x-data='buttonActions()'>
+  <div class='justify-end items-center flex w-full max-w-full flex-row gap-1.5 mt-1.5'>
     <button
         class='justify-between items-center self-stretch flex flex-row gap-1.5 bg-amber-500 px-3 py-1.5 rounded-lg cursor-pointer hover:drop-shadow-lg'
         @click="await clickToAction(item);"
