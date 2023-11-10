@@ -16,10 +16,20 @@ const script = {
     let cursor = payload.cursor || 0;
     let type = payload.type || undefined;
     let filter = payload.filter || '';
-    const blockManager = ctx.app.blocks
-    const credentialService = ctx.app.services.get('credentials');
+    
     if (type === 'recipe') {
-      const workflowIntegration = ctx.app.integrations.get('workflow');
+      return await this.handleRecipe(ctx, filter, limit, cursor);
+    } else if (type === 'block') {
+      return await this.handleBlock(ctx, filter, limit, cursor);
+    } else if (type === 'extension') {
+      return await this.handleExtension(ctx, filter, limit, cursor);
+    } else if (type === 'api') {
+      return await this.handleApi(ctx, filter, limit, cursor);
+    }
+  },
+
+  handleRecipe: async function (ctx, filter, limit, cursor) {
+    const workflowIntegration = ctx.app.integrations.get('workflow');
       const page = parseInt(cursor / limit);
       const result = await workflowIntegration.getWorkflowsForSessionUser(
         ctx,
@@ -52,8 +62,10 @@ const script = {
       return {
         items,
       };
-    } else if (type === 'block') {
-      const opts = { contentMatch: filter, tags: '' };
+  },
+  handleBlock: async function (ctx, filter, limit, cursor) {
+    const blockManager = ctx.app.blocks;
+    const opts = { contentMatch: filter, tags: '' };
       let items = blockManager.getFilteredBlocksAndPatches(limit, cursor, filter, opts);
       if (items != null && Array.isArray(items) && items.length > 0) {
         items = items.map((n) => {
@@ -66,7 +78,8 @@ const script = {
       }
       // TODO handle when items is empty
       return { items: [{type: 'block'}] }
-    } else if (type === 'extension') {
+    },
+    handleExtension: async function (ctx, filter, limit, cursor) {
       const extensions = await ctx.app.extensions.getExtensionsList();
       let items = extensions.filter(e=>!e.deprecated && e.manifest?.title.toLowerCase().includes(filter)).map(e => {
           return {type: 'extension', value: {installed: ctx.app.extensions.has(e.id), canOpen: e.manifest?.client?.addToWorkbench, id: `${e.id}`, title: `${e.manifest.title}`, description: `${e.manifest.description}`, url: `${e.url}`, author: `${e.manifest.author || 'Anonymous'}`}};
@@ -75,7 +88,10 @@ const script = {
       items.sort((a,b)=>a.value.installed === b.value.installed ? 0 : a.value.installed ? -1 : 1)
       items = items.slice(cursor, cursor + limit)
       return { items };
-    } else if (type === 'api') {
+    },
+    handleApi: async function (ctx, filter, limit, cursor) {
+      const blockManager = ctx.app.blocks;
+      const credentialService = ctx.app.services.get('credentials');
       // TODO: move to block manager
       const signUpUrlSet = {
         'openai':'https://platform.openai.com/account/api-keys',
@@ -129,7 +145,6 @@ const script = {
         return { items }
       }
     }
-  },
 };
 
 export default script;
