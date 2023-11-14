@@ -46,7 +46,6 @@ const createGallery = function () {
     prepareFromShadow() {
       this.items = [...this.shadow];
     },
-    
 
     async addItems(items: Array<CollectionItem>, replace = false) {
       if (replace) {
@@ -173,11 +172,11 @@ const createGallery = function () {
       // Don't remove it without adding the redraw back in.
       this.starred = !this.starred;
     },
-    
+
     getIconPath(item: CollectionItem) {
       return collectionContext.getIconPath(item);
     },
-    
+
     needRefresh: false,
     async refresh() {
       await this.fetchItems(true);
@@ -207,7 +206,7 @@ const createGallery = function () {
   };
 };
 
-const buttonActions = function() {
+const buttonActions = function () {
   return {
     async addAsBlock(id: string) {
       return await sdk.runClientScript('add', ['omnitool.loop_recipe', { recipe_id: id }]);
@@ -227,15 +226,15 @@ const buttonActions = function() {
     copyString(str: string) {
       navigator.clipboard.writeText(str).then(
         function () {
-          sdk.showToast('Copied Successfully!',{type: "success", description: str});
+          sdk.showToast('Copied Successfully!', { type: 'success', description: str });
         },
         function (err) {
           console.error('Could not copy the string: ', err);
         }
       );
     }
-  }
-}
+  };
+};
 
 window.Alpine = Alpine;
 document.addEventListener('alpine:init', async () => {
@@ -278,7 +277,7 @@ document.addEventListener('alpine:init', async () => {
         this.tags = (item.value.tags ?? []) as string[];
       }
 
-      switch (item.type) { 
+      switch (item.type) {
         case 'recipe':
           const recipeValue = item.value as Recipe;
           this.pictureUrl = recipeValue.pictureUrl;
@@ -321,7 +320,7 @@ document.addEventListener('alpine:init', async () => {
 
   Alpine.data('collectionManager', () => ({
     createGallery,
-    buttonActions,
+    buttonActions
   }));
 
   Alpine.magic('tooltip', (el: HTMLElement) => (message: any) => {
