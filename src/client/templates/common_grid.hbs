@@ -28,47 +28,7 @@
         d='M2.1095 7.70617L8.5 14.3333L14.8905 7.70617C15.6009 6.96942 16 5.97024 16 4.92838C16 2.75879 14.304 1 12.2119 1C11.2073 1 10.2437 1.41388 9.53333 2.15059L8.5 3.22222L7.46667 2.15059C6.75624 1.41388 5.79273 1 4.78807 1C2.69597 1 1 2.75879 1 4.92838C1 5.97024 1.3991 6.96942 2.1095 7.70617Z'
         stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round' />
     </svg>
-  <div
-    x-data="{
-            open: false,
-            toggle() {
-                if (this.open) {
-                    return this.close()
-                }
-
-                this.$refs.button.focus()
-
-                this.open = true
-            },
-            close(focusAfter) {
-                if (! this.open) return
-
-                this.open = false
-
-                focusAfter && focusAfter.focus()
-            }
-        }"
-    x-on:keydown.escape.prevent.stop="close($refs.button)"
-    x-on:focusin.window="! $refs.panel.contains($event.target) && close()"
-    x-id="['dropdown-button']"
-    class="relative inline-block">
-    <!-- Button -->
-
-    <button x-ref="button" x-on:click="toggle()" :aria-expanded="open" :aria-controls="$id('dropdown-button')" type="button" class="text-gray-700">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
-      </svg>
-    </button>
-
-    <!-- Panel -->
-    <div x-ref="panel" x-show="open" x-transition.origin.top.left x-on:click.outside="close($refs.button)" :id="$id('dropdown-button')" class="absolute right-0 z-10 mt-0.5 w-36 rounded-lg border border-gray-100 bg-white text-left text-sm shadow-lg">
-      <div class="p-1">
-        <div x-show="type === 'recipe'" @click='await addAsBlock(id); open=false' class="flex w-full items-center rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer "> Add as a Block </div>
-        <div @click='copyID(id); open=false' class="flex w-full items-center rounded-md px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"> Copy ID </div>
-        <div x-show='canDelete; open=false' @click='await deleteItem(item)' class="flex w-full items-center rounded-md px-3 py-2 text-left text-sm text-red-700 hover:bg-gray-100 cursor-pointer"> Delete </div>
-      </div>
-    </div>
-  </div>
+  {{>submenu}}
 </div>
 
   </div>

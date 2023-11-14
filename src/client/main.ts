@@ -225,13 +225,13 @@ const buttonActions = function() {
     async update(item: CollectionItem) {
       collectionContext.update(item);
     },
-    copyID(id: string) {
-      navigator.clipboard.writeText(id).then(
+    copyString(str: string) {
+      navigator.clipboard.writeText(str).then(
         function () {
-          sdk.showToast('Copied ID!',{type: "success", description: id});
+          sdk.showToast('Copied Successfully!',{type: "success", description: str});
         },
         function (err) {
-          console.error('Could not copy ID: ', err);
+          console.error('Could not copy the string: ', err);
         }
       );
     }
@@ -261,6 +261,7 @@ document.addEventListener('alpine:init', async () => {
     basePath: '',
     signUpUrl: '',
     url: '',
+    origin: '',
     key: null,
     hasKey: false,
     setData(item: CollectionItem) {
@@ -294,6 +295,7 @@ document.addEventListener('alpine:init', async () => {
       this.key = data.key;
       this.hasKey = data.hasKey;
       this.url = data.url;
+      this.origin = data.origin;
     },
     get createdDate() {
       return this.created ? new Date(this.created).toLocaleString() : null;

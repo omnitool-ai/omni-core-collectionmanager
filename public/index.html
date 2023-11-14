@@ -13,7 +13,7 @@
     }
   </style>
   
-  <script type="module" crossorigin src="/extensions/omni-core-collectionmanager/assets/main-b181896f.js"></script>
+  <script type="module" crossorigin src="/extensions/omni-core-collectionmanager/assets/main-049d1ee6.js"></script>
   <link rel="stylesheet" href="/extensions/omni-core-collectionmanager/assets/index-96bb5c0a.css">
 </head>
 
@@ -256,47 +256,48 @@
                         stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round' />
                     </svg>
                   <div
-                    x-data="{
-                            open: false,
-                            toggle() {
-                                if (this.open) {
-                                    return this.close()
-                                }
-                
-                                this.$refs.button.focus()
-                
-                                this.open = true
-                            },
-                            close(focusAfter) {
-                                if (! this.open) return
-                
-                                this.open = false
-                
-                                focusAfter && focusAfter.focus()
-                            }
-                        }"
-                    x-on:keydown.escape.prevent.stop="close($refs.button)"
-                    x-on:focusin.window="! $refs.panel.contains($event.target) && close()"
-                    x-id="['dropdown-button']"
-                    class="relative inline-block">
-                    <!-- Button -->
-                
-                    <button x-ref="button" x-on:click="toggle()" :aria-expanded="open" :aria-controls="$id('dropdown-button')" type="button" class="text-gray-700">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
-                      </svg>
-                    </button>
-                
-                    <!-- Panel -->
-                    <div x-ref="panel" x-show="open" x-transition.origin.top.left x-on:click.outside="close($refs.button)" :id="$id('dropdown-button')" class="absolute right-0 z-10 mt-0.5 w-36 rounded-lg border border-gray-100 bg-white text-left text-sm shadow-lg">
-                      <div class="p-1">
-                        <div x-show="type === 'recipe'" @click='await addAsBlock(id); open=false' class="flex w-full items-center rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer "> Add as a Block </div>
-                        <div @click='copyID(id); open=false' class="flex w-full items-center rounded-md px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"> Copy ID </div>
-                        <div x-show='canDelete; open=false' @click='await deleteItem(item)' class="flex w-full items-center rounded-md px-3 py-2 text-left text-sm text-red-700 hover:bg-gray-100 cursor-pointer"> Delete </div>
+                      x-data="{
+                              open: false,
+                              toggle() {
+                                  if (this.open) {
+                                      return this.close()
+                                  }
+                  
+                                  this.$refs.button.focus()
+                  
+                                  this.open = true
+                              },
+                              close(focusAfter) {
+                                  if (! this.open) return
+                  
+                                  this.open = false
+                  
+                                  focusAfter && focusAfter.focus()
+                              }
+                          }"
+                      x-on:keydown.escape.prevent.stop="close($refs.button)"
+                      x-on:focusin.window="! $refs.panel.contains($event.target) && close()"
+                      x-id="['dropdown-button']"
+                      class="relative inline-block">
+                      <!-- Button -->
+                  
+                      <button x-ref="button" x-on:click="toggle()" :aria-expanded="open" :aria-controls="$id('dropdown-button')" type="button" class="text-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                        </svg>
+                      </button>
+                  
+                      <!-- Panel -->
+                      <div x-ref="panel" x-show="open" x-transition.origin.top.left x-on:click.outside="close($refs.button)" :id="$id('dropdown-button')" class="absolute right-0 z-10 mt-0.5 w-36 rounded-lg border border-gray-100 bg-white text-left text-sm shadow-lg">
+                        <div class="p-1">        
+                          <div x-show="type==='recipe'" @click='await addAsBlock(id); open=false' class="flex w-full items-center rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer "> Add as a Block </div>
+                          <div x-show="type==='recipe' || type=='extension'" @click='copyString(id); open=false' class="flex w-full items-center rounded-md px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"> Copy ID </div>
+                          <div x-show="type==='recipe'" x-show='canDelete' @click='await deleteItem(item); open=false' class="flex w-full items-center rounded-md px-3 py-2 text-left text-sm text-red-700 hover:bg-gray-100 cursor-pointer"> Delete </div>
+                          <div x-show="type==='block'" @click='copyString(name); open=false' class="flex w-full items-center rounded-md px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"> Copy Name </div>
+                          <a :href='origin' target="_blank"><div x-show="type==='extension'" class="flex w-full items-center rounded-md px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"> GitHub </div></a>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                </div>
+                    </div></div>
                 
                   </div>
                   <!-- Description -->
@@ -426,47 +427,48 @@
                         stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round' />
                     </svg>
                   <div
-                    x-data="{
-                            open: false,
-                            toggle() {
-                                if (this.open) {
-                                    return this.close()
-                                }
-                
-                                this.$refs.button.focus()
-                
-                                this.open = true
-                            },
-                            close(focusAfter) {
-                                if (! this.open) return
-                
-                                this.open = false
-                
-                                focusAfter && focusAfter.focus()
-                            }
-                        }"
-                    x-on:keydown.escape.prevent.stop="close($refs.button)"
-                    x-on:focusin.window="! $refs.panel.contains($event.target) && close()"
-                    x-id="['dropdown-button']"
-                    class="relative inline-block">
-                    <!-- Button -->
-                
-                    <button x-ref="button" x-on:click="toggle()" :aria-expanded="open" :aria-controls="$id('dropdown-button')" type="button" class="text-gray-700">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
-                      </svg>
-                    </button>
-                
-                    <!-- Panel -->
-                    <div x-ref="panel" x-show="open" x-transition.origin.top.left x-on:click.outside="close($refs.button)" :id="$id('dropdown-button')" class="absolute right-0 z-10 mt-0.5 w-36 rounded-lg border border-gray-100 bg-white text-left text-sm shadow-lg">
-                      <div class="p-1">
-                        <div x-show="type === 'recipe'" @click='await addAsBlock(id); open=false' class="flex w-full items-center rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer "> Add as a Block </div>
-                        <div @click='copyID(id); open=false' class="flex w-full items-center rounded-md px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"> Copy ID </div>
-                        <div x-show='canDelete; open=false' @click='await deleteItem(item)' class="flex w-full items-center rounded-md px-3 py-2 text-left text-sm text-red-700 hover:bg-gray-100 cursor-pointer"> Delete </div>
+                      x-data="{
+                              open: false,
+                              toggle() {
+                                  if (this.open) {
+                                      return this.close()
+                                  }
+                  
+                                  this.$refs.button.focus()
+                  
+                                  this.open = true
+                              },
+                              close(focusAfter) {
+                                  if (! this.open) return
+                  
+                                  this.open = false
+                  
+                                  focusAfter && focusAfter.focus()
+                              }
+                          }"
+                      x-on:keydown.escape.prevent.stop="close($refs.button)"
+                      x-on:focusin.window="! $refs.panel.contains($event.target) && close()"
+                      x-id="['dropdown-button']"
+                      class="relative inline-block">
+                      <!-- Button -->
+                  
+                      <button x-ref="button" x-on:click="toggle()" :aria-expanded="open" :aria-controls="$id('dropdown-button')" type="button" class="text-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                        </svg>
+                      </button>
+                  
+                      <!-- Panel -->
+                      <div x-ref="panel" x-show="open" x-transition.origin.top.left x-on:click.outside="close($refs.button)" :id="$id('dropdown-button')" class="absolute right-0 z-10 mt-0.5 w-36 rounded-lg border border-gray-100 bg-white text-left text-sm shadow-lg">
+                        <div class="p-1">        
+                          <div x-show="type==='recipe'" @click='await addAsBlock(id); open=false' class="flex w-full items-center rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer "> Add as a Block </div>
+                          <div x-show="type==='recipe' || type=='extension'" @click='copyString(id); open=false' class="flex w-full items-center rounded-md px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"> Copy ID </div>
+                          <div x-show="type==='recipe'" x-show='canDelete' @click='await deleteItem(item); open=false' class="flex w-full items-center rounded-md px-3 py-2 text-left text-sm text-red-700 hover:bg-gray-100 cursor-pointer"> Delete </div>
+                          <div x-show="type==='block'" @click='copyString(name); open=false' class="flex w-full items-center rounded-md px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"> Copy Name </div>
+                          <a :href='origin' target="_blank"><div x-show="type==='extension'" class="flex w-full items-center rounded-md px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"> GitHub </div></a>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                </div>
+                    </div></div>
                 
                   </div>
                   <!-- Description -->
@@ -583,47 +585,48 @@
                       stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round' />
                   </svg>
                 <div
-                  x-data="{
-                          open: false,
-                          toggle() {
-                              if (this.open) {
-                                  return this.close()
-                              }
-              
-                              this.$refs.button.focus()
-              
-                              this.open = true
-                          },
-                          close(focusAfter) {
-                              if (! this.open) return
-              
-                              this.open = false
-              
-                              focusAfter && focusAfter.focus()
-                          }
-                      }"
-                  x-on:keydown.escape.prevent.stop="close($refs.button)"
-                  x-on:focusin.window="! $refs.panel.contains($event.target) && close()"
-                  x-id="['dropdown-button']"
-                  class="relative inline-block">
-                  <!-- Button -->
-              
-                  <button x-ref="button" x-on:click="toggle()" :aria-expanded="open" :aria-controls="$id('dropdown-button')" type="button" class="text-gray-700">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
-                    </svg>
-                  </button>
-              
-                  <!-- Panel -->
-                  <div x-ref="panel" x-show="open" x-transition.origin.top.left x-on:click.outside="close($refs.button)" :id="$id('dropdown-button')" class="absolute right-0 z-10 mt-0.5 w-36 rounded-lg border border-gray-100 bg-white text-left text-sm shadow-lg">
-                    <div class="p-1">
-                      <div x-show="type === 'recipe'" @click='await addAsBlock(id); open=false' class="flex w-full items-center rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer "> Add as a Block </div>
-                      <div @click='copyID(id); open=false' class="flex w-full items-center rounded-md px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"> Copy ID </div>
-                      <div x-show='canDelete; open=false' @click='await deleteItem(item)' class="flex w-full items-center rounded-md px-3 py-2 text-left text-sm text-red-700 hover:bg-gray-100 cursor-pointer"> Delete </div>
+                    x-data="{
+                            open: false,
+                            toggle() {
+                                if (this.open) {
+                                    return this.close()
+                                }
+                
+                                this.$refs.button.focus()
+                
+                                this.open = true
+                            },
+                            close(focusAfter) {
+                                if (! this.open) return
+                
+                                this.open = false
+                
+                                focusAfter && focusAfter.focus()
+                            }
+                        }"
+                    x-on:keydown.escape.prevent.stop="close($refs.button)"
+                    x-on:focusin.window="! $refs.panel.contains($event.target) && close()"
+                    x-id="['dropdown-button']"
+                    class="relative inline-block">
+                    <!-- Button -->
+                
+                    <button x-ref="button" x-on:click="toggle()" :aria-expanded="open" :aria-controls="$id('dropdown-button')" type="button" class="text-gray-700">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                      </svg>
+                    </button>
+                
+                    <!-- Panel -->
+                    <div x-ref="panel" x-show="open" x-transition.origin.top.left x-on:click.outside="close($refs.button)" :id="$id('dropdown-button')" class="absolute right-0 z-10 mt-0.5 w-36 rounded-lg border border-gray-100 bg-white text-left text-sm shadow-lg">
+                      <div class="p-1">        
+                        <div x-show="type==='recipe'" @click='await addAsBlock(id); open=false' class="flex w-full items-center rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer "> Add as a Block </div>
+                        <div x-show="type==='recipe' || type=='extension'" @click='copyString(id); open=false' class="flex w-full items-center rounded-md px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"> Copy ID </div>
+                        <div x-show="type==='recipe'" x-show='canDelete' @click='await deleteItem(item); open=false' class="flex w-full items-center rounded-md px-3 py-2 text-left text-sm text-red-700 hover:bg-gray-100 cursor-pointer"> Delete </div>
+                        <div x-show="type==='block'" @click='copyString(name); open=false' class="flex w-full items-center rounded-md px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"> Copy Name </div>
+                        <a :href='origin' target="_blank"><div x-show="type==='extension'" class="flex w-full items-center rounded-md px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"> GitHub </div></a>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              </div>
+                  </div></div>
               
                 </div>
                 <!-- Description -->

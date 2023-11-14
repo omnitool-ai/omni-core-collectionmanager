@@ -81,13 +81,33 @@ const script = {
     },
     handleExtension: async function (ctx, filter, limit, cursor) {
       const extensions = await ctx.app.extensions.getExtensionsList();
-      let items = extensions.filter(e=>!e.deprecated && e.manifest?.title.toLowerCase().includes(filter)).map(e => {
-          return {type: 'extension', value: {installed: ctx.app.extensions.has(e.id), canOpen: e.manifest?.client?.addToWorkbench, id: `${e.id}`, title: `${e.manifest.title}`, description: `${e.manifest.description}`, url: `${e.url}`, author: `${e.manifest.author || 'Anonymous'}`}};
-      })
-      // sort items to put installed extensions first
-      items.sort((a,b)=>a.value.installed === b.value.installed ? 0 : a.value.installed ? -1 : 1)
-      items = items.slice(cursor, cursor + limit)
-      return { items };
+      
+      const filteredExtensions = extensions
+        .filter(({ deprecated, manifest }) => !deprecated && manifest?.title.toLowerCase().includes(filter))
+        .map(({ id, manifest, url }) => {
+            const { title, description, author = 'Anonymous', client, origin } = manifest;
+            return {
+                type: 'extension',
+                value: {
+                    installed: ctx.app.extensions.has(id),
+                    canOpen: client?.addToWorkbench,
+                    id,
+                    title,
+                    description,
+                    url,
+                    author,
+                    origin
+                },
+                
+            };
+        });
+        // Sort to put installed extensions first
+        filteredExtensions.sort((a, b) => b.value.installed - a.value.installed);
+
+        // Paginate the results
+        const paginatedItems = filteredExtensions.slice(cursor, cursor + limit);
+
+        return { items: paginatedItems };
     },
     handleApi: async function (ctx, filter, limit, cursor) {
       const blockManager = ctx.app.blocks;
