@@ -324,7 +324,7 @@ document.addEventListener('alpine:init', async () => {
     buttonActions,
   }));
 
-  Alpine.magic('tooltip', (el: HTMLElement) => (message) => {
+  Alpine.magic('tooltip', (el: HTMLElement) => (message: any) => {
     const instance = tippy(el, { content: message, trigger: 'manual' });
 
     instance.show();

@@ -3,9 +3,6 @@
  * All rights reserved.
  */
 
-import path from 'path';
-import fs from 'fs/promises';
-import yaml from 'js-yaml';
 import { User } from 'omni-shared'
 
 const script = {
