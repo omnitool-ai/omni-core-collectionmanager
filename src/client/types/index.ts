@@ -25,6 +25,7 @@ interface Recipe extends BaseCollectionValue {
   deleted: boolean;
   createdDate: string | null;
   updatedDate: string | null;
+  template: boolean;
 }
 
 interface Extension extends BaseCollectionValue {
@@ -34,6 +35,7 @@ interface Extension extends BaseCollectionValue {
   isCore: boolean;
   isLocal: boolean;
   url: string;
+  origin: string;
 }
 
 interface Block extends BaseCollectionValue {

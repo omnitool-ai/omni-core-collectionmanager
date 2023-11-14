@@ -13,8 +13,8 @@ export class RecipeStrategy implements CollectionStrategy {
   }
 
   getIconPath(item: CollectionItem): string | null {
-    if (item.value.meta.pictureUrl) {
-      return '/extensions/omni-core-recipes/assets/recipe-cover/' + item.value.meta.pictureUrl;
+    if (item.value.pictureUrl) {
+      return '/extensions/omni-core-recipes/assets/recipe-cover/' + item.value.pictureUrl;
     } else {
       return '/omni.png';
     }
@@ -29,8 +29,8 @@ export class RecipeStrategy implements CollectionStrategy {
     sdk.showExtension('omni-extension-wa-chat-ui', {
       chat: {
         id: item.value.id,
-        name: item.value.meta.name,
-        description: item.value.meta.description,
+        name: item.value.name,
+        description: item.value.description,
         image: this.getIconPath(item)
       }
     });
@@ -42,7 +42,7 @@ export class RecipeStrategy implements CollectionStrategy {
       singletonHash: 'formio-' + item.value.id,
       winbox: {
         //@ts-ignore
-        title: '▶️' + item.value.meta.name,
+        title: '▶️' + item.value.name,
         x: 'center',
         y: 'center',
         minheight: 500,

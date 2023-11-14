@@ -1,8 +1,7 @@
 <!-- For multiselect-->
 <div @mouseenter='hoverItem = item.value' @mouseleave='hoverItem = null' @contextmenu.prevent='selectItem(item, $event)'
   class="border-2 rounded-lg border-transparent"
-  :class="{ 'border-yellow-300': multiSelectedItems.includes(item) }"
-  alt='item.value.meta.fileName' x-data='buttonActions()'>
+  :class="{ 'border-yellow-300': multiSelectedItems.includes(item) }" x-data='buttonActions()'>
   <!-- Collection -->
   <div x-data='collection' x-effect='setData(item)'
     class='items-center flex flex-[1_0_auto] w-[416px] flex-col bg-neutral-200 px-1.5 py-2 rounded-lg'>
@@ -30,7 +29,7 @@
           <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
           <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
         </svg>
-        <div class='text-neutral-50 text-sm leading-5 self-center my-auto' x-text="item.value.meta?.template === true ? 'Remix' : 'Edit'">
+        <div class='text-neutral-50 text-sm leading-5 self-center my-auto' x-text="item.value.template === true ? 'Remix' : 'Edit'">
           Edit
         </div>
       </button>

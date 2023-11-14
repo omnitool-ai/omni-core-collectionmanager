@@ -41,15 +41,16 @@ const script = {
         console.log('no result')
         return {items: []}
       }
-      let items = result.data.map((item) => {
+      let items = result.data.map(({id, canDelete, meta, ui, owner}) => {
+        const { author, created, description, name, pictureUrl, tags, template, updated, visible, category } = meta;
         return {
-          value: { ...item },
+          value: { id, canDelete, author, created, description, name, pictureUrl, tags, template, updated, ui, owner, visible, category },
           type: 'recipe',
           currentPage: page,
           totalPages: result.totalPage,
         };
       });
-      items = items.filter((item) => item.value.meta?.visible !== false);
+      items = items.filter((item) => item.value.visible !== false);
       items = items.map((item) => {
         if(!ctx.app.extensions.has("omni-extension-wa-chat-ui") && item.value?.ui?.chat?.enabled) {
           item.value.ui.chat.enabled = false

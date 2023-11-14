@@ -4,8 +4,7 @@
   @mouseleave='hoverItem = null' 
   @contextmenu.prevent='selectItem(item, $event)'
   class="border-2 rounded-lg border-transparent"
-  :class="{ 'border-yellow-300': multiSelectedItems.includes(item) }"
-  alt='item.value.meta.fileName'  x-data='buttonActions()'>
+  :class="{ 'border-yellow-300': multiSelectedItems.includes(item) }" x-data='buttonActions()'>
 <!-- Collection -->
   <div
     x-data='collection'

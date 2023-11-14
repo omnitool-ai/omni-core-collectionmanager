@@ -194,7 +194,7 @@ const createGallery = function () {
         });
       } else if (this.filterOption === 'Template') {
         this.items = this.items.filter((item) => {
-          return item.value.meta?.template ? true : false;
+          return item.value.template ? true : false;
         });
       } else if (this.filterOption === 'All') {
         // Do nothing
@@ -268,24 +268,24 @@ document.addEventListener('alpine:init', async () => {
       const type = item.type;
       const data = item.value;
       this.id = data.id;
-      this.name = data.meta?.name ?? data.name;
-      this.title = data.meta?.title ?? data.title;
-      this.description = data.meta?.description ?? data.description;
-      this.pictureUrl = data.meta?.pictureUrl ?? data.pictureUrl;
+      this.name = data.name;
+      this.title = data.title;
+      this.description = data.description;
+      this.pictureUrl = data.pictureUrl;
       this.type = type;
-      this.category = data.category ?? data.meta?.category;
-      this.author = data.meta?.author ?? data.author;
+      this.category = data.category;
+      this.author = data.author;
       if (type === 'block') {
         this.tags = data.name?.split('.');
       } else {
-        this.tags = data.meta?.tags ?? data.tags;
+        this.tags = data.tags;
       }
 
       const key = collectionContext.getFavoriteKey(item);
       this.starred = window.localStorage.getItem(key) ? true : false;
       this.canDelete = data.canDelete;
-      this.created = data.meta?.created;
-      this.updated = data.meta?.updated;
+      this.created = data.created;
+      this.updated = data.updated;
       this.installed = data.installed;
       this.canOpen = data.canOpen;
 

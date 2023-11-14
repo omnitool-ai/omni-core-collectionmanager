@@ -12,9 +12,7 @@ describe('recipe - getIconPath', () => {
     const item = {
       type: 'recipe',
       value: {
-        meta: {
-          pictureUrl: 'sample.jpg'
-        }
+        pictureUrl: 'sample.jpg'
       }
     };
     expect(strategy.getIconPath(item)).toBe('/extensions/omni-core-recipes/assets/recipe-cover/sample.jpg');
@@ -25,7 +23,6 @@ describe('recipe - getIconPath', () => {
     const item = {
       type: 'recipe',
       value: {
-        meta: {}
       }
     };
     expect(strategy.getIconPath(item)).toBe('/omni.png');
