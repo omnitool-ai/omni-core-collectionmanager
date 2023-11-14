@@ -15,6 +15,6 @@ describe('extension - getIconPath', () => {
         id: 'exampleId'
       }
     };
-    expect(strategy.getIconPath(item)).toBe('/extensions/exampleId/logo.png');
+    expect(strategy.getIconPath(item.value)).toBe('/extensions/exampleId/logo.png');
   });
 });

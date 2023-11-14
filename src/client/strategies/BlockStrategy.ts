@@ -4,16 +4,16 @@
  */
 
 import { OmniSDKClient } from 'omni-sdk';
-import { CollectionItem } from '../types';
+import { Block } from '../types';
 import { CollectionStrategy } from './CollectionStrategy';
 
 export class BlockStrategy implements CollectionStrategy {
-  getFavoriteKey(item: CollectionItem): string {
-    return 'fav-' + item.type + item.value.name;
+  getFavoriteKey(value: Block): string {
+    return 'fav-block' + value.name;
   }
 
-  getIconPath(item: CollectionItem): string | null {
-    const names = item.value?.name?.split('.');
+  getIconPath(value: Block): string | null {
+    const names = value?.name?.split('.');
     if (names && names.length > 1) {
       if (names[0].includes(':')) {
         return '/extensions/' + names[0].split(':')[0] + '/logo.png';
@@ -23,7 +23,7 @@ export class BlockStrategy implements CollectionStrategy {
     }
     return null;
   }
-  async clickToAction(item: CollectionItem, sdk: OmniSDKClient): Promise<void> {
-    console.log(await sdk.runClientScript('add', [item.value.name]));
+  async clickToAction(value: Block, sdk: OmniSDKClient): Promise<void> {
+    console.log(await sdk.runClientScript('add', [value.name]));
   }
 }

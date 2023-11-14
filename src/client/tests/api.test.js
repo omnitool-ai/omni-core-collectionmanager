@@ -15,6 +15,6 @@ describe('api - getIconPath', () => {
         namespace: 'test'
       }
     };
-    expect(strategy.getIconPath(item)).toBe('/logos/test.png');
+    expect(strategy.getIconPath(item.value)).toBe('/logos/test.png');
   });
 });

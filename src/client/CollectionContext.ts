@@ -31,16 +31,16 @@ export class CollectionContext {
   }
 
   getIconPath(item: CollectionItem): string | null {
-    return this.strategy.getIconPath(item);
+    return this.strategy.getIconPath(item.value);
   }
 
   clickToAction(item: CollectionItem): void {
-    this.strategy.clickToAction(item, this.sdk);
+    this.strategy.clickToAction(item.value, this.sdk);
   }
 
   openChat(item: CollectionItem) {
     if (this.strategy.openChat) {
-      this.strategy.openChat(item, this.sdk);
+      this.strategy.openChat(item.value, this.sdk);
     } else {
       console.log('openChat is not implemented for this collection type');
     }
@@ -48,7 +48,7 @@ export class CollectionContext {
 
   openFormIO(item: CollectionItem) {
     if (this.strategy.openFormIO) {
-      this.strategy.openFormIO(item, this.sdk);
+      this.strategy.openFormIO(item.value, this.sdk);
     } else {
       console.log('openFormIO is not implemented for this collection type');
     }
@@ -56,7 +56,7 @@ export class CollectionContext {
 
   update(item: CollectionItem) {
     if (this.strategy.update) {
-      this.strategy.update(item, this.sdk);
+      this.strategy.update(item.value, this.sdk);
     } else {
       console.log('update is not implemented for this collection type');
     }
@@ -64,7 +64,7 @@ export class CollectionContext {
 
   getFavoriteKey(item: CollectionItem) {
     if (this.strategy.getFavoriteKey) {
-      return this.strategy.getFavoriteKey(item);
+      return this.strategy.getFavoriteKey(item.value);
     } else {
       console.log('getFavoriteKey is not implemented for this collection type');
       return '';

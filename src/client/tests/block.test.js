@@ -15,7 +15,7 @@ describe('block - getIconPath', () => {
         name: 'block.abc'
       }
     };
-    expect(strategy.getIconPath(item)).toBe('/logos/block.png');
+    expect(strategy.getIconPath(item.value)).toBe('/logos/block.png');
   });
 
   it('should return the logo of the extension if it is generated from the extension', () => {
@@ -26,6 +26,6 @@ describe('block - getIconPath', () => {
         name: 'omni-test-extension:abc.def'
       }
     };
-    expect(strategy.getIconPath(item)).toBe('/extensions/omni-test-extension/logo.png');
+    expect(strategy.getIconPath(item.value)).toBe('/extensions/omni-test-extension/logo.png');
   });
 });
