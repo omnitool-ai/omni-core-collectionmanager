@@ -50,6 +50,7 @@ export interface Api extends BaseCollectionValue {
   url: string;
   key: Map<string, string>;
   hasKey: boolean;
+  api: any;
 }
 
 export type CollectionValue = Recipe | Extension | Block | Api;

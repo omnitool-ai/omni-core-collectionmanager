@@ -12,7 +12,7 @@ import { CollectionItem, CollectionType } from './types';
 import { OmniSDKClient } from 'omni-sdk';
 
 export class CollectionContext {
-  strategy: CollectionStrategy;
+  strategy!: CollectionStrategy;
   sdk: OmniSDKClient;
 
   constructor(type: CollectionType, sdk: OmniSDKClient) {
