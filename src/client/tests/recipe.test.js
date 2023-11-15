@@ -12,12 +12,10 @@ describe('recipe - getIconPath', () => {
     const item = {
       type: 'recipe',
       value: {
-        meta: {
-          pictureUrl: 'sample.jpg'
-        }
+        pictureUrl: 'sample.jpg'
       }
     };
-    expect(strategy.getIconPath(item)).toBe('/extensions/omni-core-recipes/assets/recipe-cover/sample.jpg');
+    expect(strategy.getIconPath(item.value)).toBe('/extensions/omni-core-recipes/assets/recipe-cover/sample.jpg');
   });
 
   it('should return default path for recipe type if pictureUrl is missing', () => {
@@ -25,9 +23,8 @@ describe('recipe - getIconPath', () => {
     const item = {
       type: 'recipe',
       value: {
-        meta: {}
       }
     };
-    expect(strategy.getIconPath(item)).toBe('/omni.png');
+    expect(strategy.getIconPath(item.value)).toBe('/omni.png');
   });
 });

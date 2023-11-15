@@ -16,7 +16,7 @@ interface BaseCollectionValue {
   setData: (item: CollectionItem) => void;
 }
 
-interface Recipe extends BaseCollectionValue {
+export interface Recipe extends BaseCollectionValue {
   author: string;
   pictureUrl: string;
   canDelete: boolean;
@@ -25,27 +25,32 @@ interface Recipe extends BaseCollectionValue {
   deleted: boolean;
   createdDate: string | null;
   updatedDate: string | null;
+  template: boolean;
+  version: string;
 }
 
-interface Extension extends BaseCollectionValue {
+export interface Extension extends BaseCollectionValue {
   author: string;
   installed: boolean;
   canOpen: boolean;
   isCore: boolean;
   isLocal: boolean;
   url: string;
+  origin: string;
 }
 
-interface Block extends BaseCollectionValue {
+export interface Block extends BaseCollectionValue {
   // ... (any attributes unique to Block)
 }
 
-interface Api extends BaseCollectionValue {
+export interface Api extends BaseCollectionValue {
   namespace: string;
   basePath: string;
   signUpUrl: string;
   url: string;
   key: Map<string, string>;
+  hasKey: boolean;
+  api: any;
 }
 
 export type CollectionValue = Recipe | Extension | Block | Api;

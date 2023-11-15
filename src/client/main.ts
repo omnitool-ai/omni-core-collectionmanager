@@ -8,7 +8,7 @@ import tippy from 'tippy.js';
 import 'tippy.js/dist/tippy.css';
 import DOMPurify from 'dompurify';
 import { OmniSDKClient } from 'omni-sdk';
-import { CollectionItem, CollectionType } from './types';
+import { CollectionItem, CollectionType, Recipe, Extension, Api } from './types';
 import { CollectionContext } from './CollectionContext';
 
 const sdk = new OmniSDKClient('omni-core-collectionmanager').init();
@@ -23,7 +23,6 @@ const params = sdk.args;
 let type = params?.type;
 let filter = params?.filter;
 const collectionContext = new CollectionContext(type, sdk);
-
 const createGallery = function () {
   return {
     type: type,
@@ -47,7 +46,6 @@ const createGallery = function () {
     prepareFromShadow() {
       this.items = [...this.shadow];
     },
-    
 
     async addItems(items: Array<CollectionItem>, replace = false) {
       if (replace) {
@@ -174,11 +172,11 @@ const createGallery = function () {
       // Don't remove it without adding the redraw back in.
       this.starred = !this.starred;
     },
-    
+
     getIconPath(item: CollectionItem) {
       return collectionContext.getIconPath(item);
     },
-    
+
     needRefresh: false,
     async refresh() {
       await this.fetchItems(true);
@@ -194,7 +192,7 @@ const createGallery = function () {
         });
       } else if (this.filterOption === 'Template') {
         this.items = this.items.filter((item) => {
-          return item.value.meta?.template ? true : false;
+          return item.value.template ? true : false;
         });
       } else if (this.filterOption === 'All') {
         // Do nothing
@@ -208,7 +206,7 @@ const createGallery = function () {
   };
 };
 
-const buttonActions = function() {
+const buttonActions = function () {
   return {
     async addAsBlock(id: string) {
       return await sdk.runClientScript('add', ['omnitool.loop_recipe', { recipe_id: id }]);
@@ -225,8 +223,18 @@ const buttonActions = function() {
     async update(item: CollectionItem) {
       collectionContext.update(item);
     },
-  }
-}
+    copyString(str: string) {
+      navigator.clipboard.writeText(str).then(
+        function () {
+          sdk.showToast('Copied Successfully!', { type: 'success', description: str });
+        },
+        function (err) {
+          console.error('Could not copy the string: ', err);
+        }
+      );
+    }
+  };
+};
 
 window.Alpine = Alpine;
 document.addEventListener('alpine:init', async () => {
@@ -239,51 +247,68 @@ document.addEventListener('alpine:init', async () => {
     type: '',
     category: '',
     author: '',
-    tags: [],
+    tags: [] as string[],
     starred: false,
     canDelete: false,
     canOpen: false,
     installed: false,
-    created: null,
-    updated: null,
+    created: null as Date | null,
+    updated: null as Date | null,
     deleted: false,
     namespace: '',
     basePath: '',
     signUpUrl: '',
     url: '',
-    key: null,
+    origin: '',
+    key: null as Map<string, string> | null,
     hasKey: false,
     setData(item: CollectionItem) {
-      const type = item.type;
-      const data = item.value;
-      this.id = data.id;
-      this.name = data.meta?.name ?? data.name;
-      this.title = data.meta?.title ?? data.title;
-      this.description = data.meta?.description ?? data.description;
-      this.pictureUrl = data.meta?.pictureUrl ?? data.pictureUrl;
-      this.type = type;
-      this.category = data.category ?? data.meta?.category;
-      this.author = data.meta?.author ?? data.author;
-      if (type === 'block') {
-        this.tags = data.name?.split('.');
+      this.type = item.type;
+      this.id = item.value.id;
+      this.name = item.value.name;
+      this.title = item.value.title;
+      this.description = item.value.description;
+      this.category = item.value.category;
+      const key = collectionContext.getFavoriteKey(item);
+      this.starred = !!window.localStorage.getItem(key);
+      if (item.type === 'block') {
+        this.tags = (item.value.name?.split('.') ?? []) as string[];
       } else {
-        this.tags = data.meta?.tags ?? data.tags;
+        this.tags = (item.value.tags ?? []) as string[];
       }
 
-      const key = collectionContext.getFavoriteKey(item);
-      this.starred = window.localStorage.getItem(key) ? true : false;
-      this.canDelete = data.canDelete;
-      this.created = data.meta?.created;
-      this.updated = data.meta?.updated;
-      this.installed = data.installed;
-      this.canOpen = data.canOpen;
-
-      this.namespace = data.namespace;
-      this.basePath = data.api?.basePath;
-      this.signUpUrl = data.signUpUrl;
-      this.key = data.key;
-      this.hasKey = data.hasKey;
-      this.url = data.url;
+      switch (item.type) {
+        case 'recipe':
+          const recipeValue = item.value as Recipe;
+          this.pictureUrl = recipeValue.pictureUrl;
+          this.canDelete = recipeValue.canDelete;
+          this.created = recipeValue.created;
+          this.updated = recipeValue.updated;
+          this.deleted = recipeValue.deleted;
+          break;
+        case 'extension':
+          const extensionValue = item.value as Extension;
+          this.author = extensionValue.author;
+          this.url = extensionValue.url;
+          this.origin = extensionValue.origin;
+          this.canOpen = extensionValue.canOpen;
+          this.installed = extensionValue.installed;
+          break;
+        case 'api':
+          const apiValue = item.value as Api;
+          this.namespace = apiValue.namespace;
+          this.basePath = apiValue.api?.basePath;
+          this.signUpUrl = apiValue.signUpUrl;
+          this.key = apiValue.key;
+          this.hasKey = apiValue.hasKey;
+          this.url = apiValue.url;
+          break;
+        case 'block':
+          break;
+        default:
+          // Handle or log an unexpected type
+          console.warn(`Unexpected type: ${item.type}`);
+      }
     },
     get createdDate() {
       return this.created ? new Date(this.created).toLocaleString() : null;
@@ -295,10 +320,10 @@ document.addEventListener('alpine:init', async () => {
 
   Alpine.data('collectionManager', () => ({
     createGallery,
-    buttonActions,
+    buttonActions
   }));
 
-  Alpine.magic('tooltip', (el: HTMLElement) => (message) => {
+  Alpine.magic('tooltip', (el: HTMLElement) => (message: any) => {
     const instance = tippy(el, { content: message, trigger: 'manual' });
 
     instance.show();

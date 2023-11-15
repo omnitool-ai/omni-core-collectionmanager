@@ -4,31 +4,31 @@
  */
 
 import { OmniSDKClient } from 'omni-sdk';
-import { CollectionItem } from '../types';
+import { Api } from '../types';
 import { CollectionStrategy } from './CollectionStrategy';
 
 export class ApiStrategy implements CollectionStrategy {
-  getFavoriteKey(item: CollectionItem): string {
-    return 'fav-' + item.type + item.value.id;
+  getFavoriteKey(value: Api): string {
+    return 'fav-api' + value.id;
   }
   
-  getIconPath(item: CollectionItem): string | null {
-    return '/logos/' + item.value.namespace + '.png';
+  getIconPath(value: Api): string | null {
+    return '/logos/' + value.namespace + '.png';
   }
 
-  async clickToAction(item: CollectionItem, sdk: OmniSDKClient): Promise<void> {
-    if (item.value.hasKey) {
-      item.value.hasKey = !item.value.hasKey; // Toggle on click
-      const response = await sdk.runClientScript('revokeKey', [item.value.namespace, item.value.key.id]);
-      item.value.hasKey = !response.answer; // Set to server value
+  async clickToAction(value: Api, sdk: OmniSDKClient): Promise<void> {
+    if (value.hasKey) {
+      value.hasKey = !value.hasKey; // Toggle on click
+      const response = await sdk.runClientScript('revokeKey', [value.namespace, value.key.id]);
+      value.hasKey = !response.answer; // Set to server value
     } else {
-      item.value.hasKey = !item.value.hasKey; // Toggle on click
+      value.hasKey = !value.hasKey; // Toggle on click
       const response = await sdk.runClientScript('setKey', [
-        item.value.namespace,
-        item.value.key.id,
-        item.value.key.secret
+        value.namespace,
+        value.key.id,
+        value.key.secret
       ]);
-      item.value.hasKey = response.answer; // Set to server value
+      value.hasKey = response.answer; // Set to server value
     }
   }
 }

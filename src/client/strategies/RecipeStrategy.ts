@@ -4,45 +4,45 @@
  */
 
 import { CollectionStrategy } from './CollectionStrategy';
-import { CollectionItem } from '../types';
+import { Recipe } from '../types';
 import { OmniSDKClient } from 'omni-sdk';
 
 export class RecipeStrategy implements CollectionStrategy {
-  getFavoriteKey(item: CollectionItem): string {
-    return 'fav-' + item.type + item.value.id;
+  getFavoriteKey(value: Recipe): string {
+    return 'fav-recipe' + value.id;
   }
 
-  getIconPath(item: CollectionItem): string | null {
-    if (item.value.meta.pictureUrl) {
-      return '/extensions/omni-core-recipes/assets/recipe-cover/' + item.value.meta.pictureUrl;
+  getIconPath(value: Recipe): string | null {
+    if (value.pictureUrl) {
+      return '/extensions/omni-core-recipes/assets/recipe-cover/' + value.pictureUrl;
     } else {
       return '/omni.png';
     }
   }
 
-  async clickToAction(item: CollectionItem, sdk: OmniSDKClient): Promise<void> {
-    await sdk.openRecipeInEditor(item.value.id, item.value.version);
+  async clickToAction(value: Recipe, sdk: OmniSDKClient): Promise<void> {
+    await sdk.openRecipeInEditor(value.id, value.version);
     sdk.close();
   }
 
-  openChat(item: CollectionItem, sdk: OmniSDKClient): void {
+  openChat(value: Recipe, sdk: OmniSDKClient): void {
     sdk.showExtension('omni-extension-wa-chat-ui', {
       chat: {
-        id: item.value.id,
-        name: item.value.meta.name,
-        description: item.value.meta.description,
-        image: this.getIconPath(item)
+        id: value.id,
+        name: value.name,
+        description: value.description,
+        image: this.getIconPath(value)
       }
     });
     sdk.close();
   }
 
-  openFormIO(item: CollectionItem, sdk: OmniSDKClient): void {
-    sdk.showExtension('omni-core-formio', { recipe: { id: item.value.id, version: undefined } }, 'render', {
-      singletonHash: 'formio-' + item.value.id,
+  openFormIO(value: Recipe, sdk: OmniSDKClient): void {
+    sdk.showExtension('omni-core-formio', { recipe: { id: value.id, version: undefined } }, 'render', {
+      singletonHash: 'formio-' + value.id,
       winbox: {
         //@ts-ignore
-        title: '▶️' + item.value.meta.name,
+        title: '▶️' + value.name,
         x: 'center',
         y: 'center',
         minheight: 500,

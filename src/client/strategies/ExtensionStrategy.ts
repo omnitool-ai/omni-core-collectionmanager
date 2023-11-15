@@ -4,27 +4,27 @@
  */
 
 import { CollectionStrategy } from './CollectionStrategy';
-import { CollectionItem } from '../types';
+import { Extension } from '../types';
 import { OmniSDKClient } from 'omni-sdk';
 
 export class ExtensionStrategy implements CollectionStrategy {
-  getFavoriteKey(item: CollectionItem): string {
-    return 'fav-' + item.type + item.value.id;
+  getFavoriteKey(value: Extension): string {
+    return 'fav-extension' + value.id;
   }  
 
-  getIconPath(item: CollectionItem): string | null {
-    return '/extensions/' + item.value.id + '/logo.png';
+  getIconPath(value: Extension): string | null {
+    return '/extensions/' + value.id + '/logo.png';
   }
 
-  async clickToAction(item: CollectionItem, sdk: OmniSDKClient):  Promise<void> {
-    if (item.value.installed) {
-      sdk.showExtension(item.value.id, {}, undefined,{}, 'open')
+  async clickToAction(value: Extension, sdk: OmniSDKClient):  Promise<void> {
+    if (value.installed) {
+      sdk.showExtension(value.id, {}, undefined,{}, 'open')
     } else {
-      await sdk.runClientScript('extensions', ['add', item.value.url]);
+      await sdk.runClientScript('extensions', ['add', value.url]);
     }
   }
 
-  async update(item: CollectionItem, sdk: OmniSDKClient): Promise<void> {
-    sdk.runClientScript('extensions',['update', item.value.id]);
+  async update(value: Extension, sdk: OmniSDKClient): Promise<void> {
+    await sdk.runClientScript('extensions',['update', value.id]);
   }
 }
