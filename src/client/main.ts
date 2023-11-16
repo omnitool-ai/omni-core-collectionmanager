@@ -285,6 +285,7 @@ document.addEventListener('alpine:init', async () => {
           this.created = recipeValue.created;
           this.updated = recipeValue.updated;
           this.deleted = recipeValue.deleted;
+          this.author = recipeValue.author;
           break;
         case 'extension':
           const extensionValue = item.value as Extension;
