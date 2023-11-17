@@ -38,6 +38,7 @@
         <div x-show="type==='recipe'" x-show='canDelete' @click='await deleteItem(item); open=false' class="flex w-full items-center rounded-md px-3 py-2 text-left text-sm text-red-700 hover:bg-gray-100 cursor-pointer"> Delete </div>
         <div x-show="type==='block'" @click='copyString(name); open=false' class="flex w-full items-center rounded-md px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"> Copy Name </div>
         <a :href='origin' target="_blank"><div x-show="type==='extension'" class="flex w-full items-center rounded-md px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"> GitHub </div></a>
+        <div x-show="type==='extension' && installed" @click='await update(item); open=false' class="flex w-full items-center rounded-md px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"> Update </div>
       </div>
     </div>
   </div>
