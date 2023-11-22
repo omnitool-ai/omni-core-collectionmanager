@@ -246,7 +246,7 @@ document.addEventListener('alpine:init', async () => {
     pictureUrl: '',
     type: '',
     category: '',
-    author: '',
+    author: undefined as string | undefined,
     tags: [] as string[],
     starred: false,
     canDelete: false,
