@@ -14,11 +14,16 @@ export class BlockStrategy implements CollectionStrategy {
 
   getIconPath(value: Block): string | null {
     const names = value?.name?.split('.');
+
+
     if (names && names.length > 1) {
-      if (names[0].includes(':')) {
+      //if name starts with 'local-' or testing, strip it
+      const logo = names[0].replace(/^local-|^testing-/, '');
+
+      if (logo.includes(':')) {
         return '/extensions/' + names[0].split(':')[0] + '/logo.png';
       } else {
-        return '/logos/' + names[0] + '.png';
+        return '/extensions/omni-core-blocks/logos/' + logo + '.png';
       }
     }
     return null;

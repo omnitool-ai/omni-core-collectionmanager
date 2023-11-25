@@ -78,7 +78,8 @@ const script = {
     if (items != null && Array.isArray(items) && items.length > 0) {
       items = items.map((n) => {
         return {
-          value: { ...n[1], id: n[0] },
+
+          value: { ...n[1], id: n[0]},
           type: 'block'
         };
       });
