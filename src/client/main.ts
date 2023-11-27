@@ -209,7 +209,7 @@ const createGallery = function () {
 const buttonActions = function () {
   return {
     async addAsBlock(id: string) {
-      return await sdk.runClientScript('add', ['omnitool.loop_recipe', { recipe_id: id }]);
+      return await sdk.runClientScript('add', ['omnitool.run_recipe', { recipe_id: id }]);
     },
     async clickToAction(item: CollectionItem) {
       collectionContext.clickToAction(item);
