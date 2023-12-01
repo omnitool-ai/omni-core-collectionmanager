@@ -13,7 +13,7 @@ export class ApiStrategy implements CollectionStrategy {
   }
   
   getIconPath(value: Api): string | null {
-    return '/logos/' + value.namespace + '.png';
+    return '/extensions/omni-core-blocks/logos/' + value.namespace + '.png';
   }
 
   async clickToAction(value: Api, sdk: OmniSDKClient): Promise<void> {
