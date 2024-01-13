@@ -22,6 +22,7 @@ declare global {
 const params = sdk.args;
 let type = params?.type;
 let filter = params?.filter;
+let recipeOwner = params?.recipeOwner;
 const collectionContext = new CollectionContext(type, sdk);
 const createGallery = function () {
   return {
@@ -36,6 +37,7 @@ const createGallery = function () {
     search: filter || '',
     filterOption: '',
     isLoading: false,
+    recipeOwner: recipeOwner,
     async init() {
       await this.fetchItems();
     },
@@ -70,11 +72,12 @@ const createGallery = function () {
       if (type !== 'recipe') {
         limit += 1; // One extra to see if we are at the end of the collection.
       }
-      const body: { limit: number; cursor: number; type: CollectionType; filter: string } = {
+      const body: { limit: number; cursor: number; type: CollectionType; filter: string; recipeOwner: string } = {
         limit,
         type: this.type,
         cursor: replace ? 0 : this.cursor,
         filter: this.search
+        ,recipeOwner: this.recipeOwner
       };
       try {
         const data = await sdk.runExtensionScript('collection', body);

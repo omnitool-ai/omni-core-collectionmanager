@@ -12,11 +12,14 @@ const script = {
     let limit = payload.limit || 50;
     let cursor = payload.cursor || 0;
     let type = payload.type || undefined;
+    let recipeOwner = payload.recipeOwner || undefined;
     let filter = payload.filter || '';
-
+    
     if (type === 'recipe') {
-      return await this.handleRecipe(ctx, filter, limit, cursor);
-    } else if (type === 'block') {
+      ctx.user.recipeOwner = recipeOwner;
+      return this.handleRecipe(ctx, filter, limit, cursor);
+    }
+    else if (type === 'block') {
       return await this.handleBlock(ctx, filter, limit, cursor);
     } else if (type === 'extension') {
       return await this.handleExtension(ctx, filter, limit, cursor);
